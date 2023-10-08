@@ -9,3 +9,4 @@ clean:
 
 dirs:
 	mkdir -p obj
+	mkdir -p bin
