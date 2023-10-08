@@ -8,5 +8,4 @@ clean:
 	rm -rf bin obj
 
 dirs:
-	mkdir -p obj
-	mkdir -p bin
+	mkdir -p bin obj
