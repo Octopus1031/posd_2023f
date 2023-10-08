@@ -19,9 +19,9 @@ public:
         return _path;
     }
 
-    void add(Node * node) override{
-        _child.push_back(node);
-    }
+    // void add(Node * node) {
+    //     _child.push_back(node);
+    // }
 
     // Node * getChildByName(const char * name) const override{
     //     for(auto c:_child){

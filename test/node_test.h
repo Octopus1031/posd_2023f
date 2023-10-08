@@ -26,10 +26,10 @@ TEST(NodeSuite, FolderPathIsBooks){
     ASSERT_EQ("/Users/user/books", folder.path());
 }
 
-TEST(NodeSuite, FolderAddChild){
-    Folder folder("/Users/user/books");
-    folder.add(new file("/Users/user/books/design-pattern.pdf"));
+// TEST(NodeSuite, FolderAddChild){
+//     Folder folder("/Users/user/books");
+//     folder.add(new File("/Users/user/books/design-pattern.pdf"));
 
 
-    // ASSERT_EQ("/Users/user/books", folder.path());
-}
+//     // ASSERT_EQ("/Users/user/books", folder.path());
+// }
