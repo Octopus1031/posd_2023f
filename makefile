@@ -1,18 +1,11 @@
-.PHONY: directories clean stat
 
-all: directories bin/ut_all bin/main
+all: bin/ut_all
 
-bin/main: src/main.cpp src/hello.h
-	g++ -std=c++11 src/main.cpp -o bin/main
-
-bin/ut_all: test/ut_main.cpp test/ut_hello.h src/hello.h
-	g++ -std=c++11 test/ut_main.cpp -o bin/ut_all -lgtest -lpthread
-
-directories:
-	mkdir -p bin
+bin/ut_all: test/ut_all.cpp test/node_test.h
+	g++ -std=c++11 -Wfatal-errors -Wall test/ut_all.cpp -o bin/ut -lgtest -lpthread
 
 clean:
-	rm -f bin/*
+	rm -rf bin obj
 
-stat:
-	wc src/* test/*
+dirs:
+	mkdir -p obj
