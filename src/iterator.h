@@ -24,6 +24,10 @@ public:
     Node * currentItem() const;
     void next();
     bool isDone() const;
+
+private:
+    Folder * _composite;
+    std::vector<Node *>::iterator _it;
 };
 
 

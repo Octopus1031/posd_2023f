@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// #include "./node.h"
+#include "iterator.h"
 
 using namespace std;
 
@@ -28,6 +28,18 @@ public:
         }
     }
 
+    void remove(string path){
+        vector<Node *>::iterator it = _child.begin();
+        while(it!=_child.end()){
+            if(!path.compare((*it)->path())){
+                _child.erase(it);
+                break;
+            }
+            it++;
+        }
+        
+    }
+
     Node * getChildByName(const char * name) const {
         for(auto c:_child){
             if(!c->name().compare(name)){
@@ -43,6 +55,10 @@ public:
         v.pop_back();
         return v.back();
     }
+
+    // FolderIterator * createIterator(){
+    //     return new FolderIterator(this);
+    // }    
 
 private: 
     string _path;

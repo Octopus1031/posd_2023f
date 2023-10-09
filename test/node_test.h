@@ -35,3 +35,10 @@ TEST(NodeSuite, FolderAddChild){
     folder2.add(new File("/Users/user/books/POSD.pdf"));
     ASSERT_EQ(nullptr, folder.getChildByName("POSD.pdf"));
 }
+
+TEST(NodeSuite, RemoveByPath){
+    Folder folder("/Users/user/books");
+    folder.add(new File("/Users/user/books/design-pattern.pdf"));
+    folder.remove("/Users/user/books/design-pattern.pdf");
+    ASSERT_EQ(nullptr, folder.getChildByName("design-pattern.pdf"));
+}
