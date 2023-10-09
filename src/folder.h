@@ -58,6 +58,14 @@ public:
         return nullptr;
     }
 
+    int numberOfFiles() const override{
+        int p = 0;
+        for(auto c: _child){
+            p += c->numberOfFiles();
+        }
+        return p;
+    }
+
     //new add
     string getFolder() const override{
         std::vector<string> v = split(_path, "/");

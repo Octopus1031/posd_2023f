@@ -22,7 +22,7 @@ public:
 
     Node * find(string path);
 
-    int numberOfFiles() const;
+    virtual int numberOfFiles() const = 0;
 
     Iterator * createIterator();
 

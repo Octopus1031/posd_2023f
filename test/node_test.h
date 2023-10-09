@@ -51,14 +51,31 @@ TEST(NodeSuite, FindByPath){
     ASSERT_EQ(nullptr, folder.find("SOLID-S.pdf"));
 }
 
+TEST(NodeSuite, NumberOfFiles){
+    Folder folder("/Users/user/books");
+    folder.add(new File("/Users/user/books/design-pattern.pdf"));
+
+    Folder folder2("/Users/user/books/SOLID");
+    folder2.add(new File("/Users/user/books/SOLID/SOLID-S.pdf"));
+    folder2.add(new File("/Users/user/books/SOLID/SOLID-O.pdf"));
+    folder2.add(new File("/Users/user/books/SOLID/SOLID-L.pdf"));
+    folder2.add(new File("/Users/user/books/SOLID/SOLID-I.pdf"));
+    folder2.add(new File("/Users/user/books/SOLID/SOLID-D.pdf"));
+
+    folder.add(&folder2);
+
+    ASSERT_DOUBLE_EQ(6, folder.numberOfFiles());
+}
+
 // TEST(NodeSuite, FolderIterator){
 //     Folder folder("/Users/user/books");
 //     folder.add(new File("/Users/user/books/design-pattern.pdf"));
 //     folder.add(new File("/Users/user/books/SOLID-S.pdf"));
-//     // folder.add(new File("/Users/user/books/SOLID-O.pdf"));
-//     // folder.add(new File("/Users/user/books/SOLID-L.pdf"));
-//     // folder.add(new File("/Users/user/books/SOLID-S.pdf"));
-//     // folder.add(new File("/Users/user/books/SOLID-S.pdf"));
+//    // folder2.add(new File("/Users/user/books/SOLID/SOLID-S.pdf"));
+//    // folder2.add(new File("/Users/user/books/SOLID/SOLID-O.pdf"));
+//    // folder2.add(new File("/Users/user/books/SOLID/SOLID-L.pdf"));
+//    // folder2.add(new File("/Users/user/books/SOLID/SOLID-I.pdf"));
+//    // folder2.add(new File("/Users/user/books/SOLID/SOLID-D.pdf"));
 
 //     FolderIterator * it = folder.createIterator();
 

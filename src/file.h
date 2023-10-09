@@ -15,6 +15,10 @@ public:
         return _path;
     }
 
+    int numberOfFiles() const override{
+        return 1;
+    }
+
     //new add
     string getFolder() const override{
         std::vector<string> v = split(_path, "/");
