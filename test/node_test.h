@@ -29,8 +29,9 @@ TEST(NodeSuite, FolderPathIsBooks){
 TEST(NodeSuite, FolderAddChild){
     Folder folder("/Users/user/books");
     folder.add(new File("/Users/user/books/design-pattern.pdf"));
-
     ASSERT_EQ("design-pattern.pdf", folder.getChildByName("design-pattern.pdf")->name());
 
-    // ASSERT_EQ("/Users/user/books", folder.path());
+    Folder folder2("/Users/user/NOTbooks");
+    folder2.add(new File("/Users/user/books/POSD.pdf"));
+    ASSERT_EQ(nullptr, folder.getChildByName("POSD.pdf"));
 }

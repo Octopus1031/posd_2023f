@@ -23,8 +23,9 @@ public:
     }
 
     void add(Node * node) {
-        _child.push_back(node);
-        // if(node.path.compare())
+        if(!node->getFolder().compare(this->name())){
+            _child.push_back(node);
+        }
     }
 
     Node * getChildByName(const char * name) const {
@@ -33,7 +34,14 @@ public:
                 return c;
             }
         }
-        return NULL;
+        return nullptr;
+    }
+
+    //new add
+    string getFolder() const override{
+        vector<string> v = split(_path, "/");
+        v.pop_back();
+        return v.back();
     }
 
 private: 

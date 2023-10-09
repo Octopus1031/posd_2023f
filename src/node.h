@@ -39,6 +39,8 @@ public:
         }
         return v;
     }
+
+    virtual string getFolder() const = 0;
 };
 
 

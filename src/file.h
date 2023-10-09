@@ -15,6 +15,13 @@ public:
         return _path;
     }
 
+    //new add
+    string getFolder() const override{
+        vector<string> v = split(_path, "/");
+        v.pop_back();
+        return v.back();
+    }
+
 private: 
     string _path;
 };
