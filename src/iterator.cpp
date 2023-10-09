@@ -3,20 +3,20 @@
 #include "./node.h"
 #include "./folder.h"
 
-Iterator::Iterator(Folder * composite): _composite(composite) {}
+FolderIterator::FolderIterator(Folder * composite): _composite(composite) {}
 
-void first(){
+void FolderIterator::first(){
     _it = _composite->_composite.begin();
 }
 
-Node * currentItem() const{
+Node * FolderIterator::currentItem() const{
     return *_it;
 }
 
-void next(){
+void FolderIterator::next(){
     _it++;
 }
 
-bool isDone() const{
+bool FolderIterator::isDone() const{
     return _it == _composite->composite.end();
 }

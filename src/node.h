@@ -28,7 +28,7 @@ public:
 
     // new add
     vector<string> split (string str, string token) const {
-        vector<string> v;
+        std::vector<string> v;
         while(1){
             v.push_back(str.substr(0, str.find(token)));
             str = str.substr(str.find(token)+1, str.length());

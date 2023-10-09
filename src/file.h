@@ -7,7 +7,7 @@ public:
         
     }
     string name() const override{
-        vector<string> v = split(path(), "/");
+        std::vector<string> v = split(path(), "/");
         return v.back();
     };
 
@@ -17,7 +17,7 @@ public:
 
     //new add
     string getFolder() const override{
-        vector<string> v = split(_path, "/");
+        std::vector<string> v = split(_path, "/");
         v.pop_back();
         return v.back();
     }

@@ -14,7 +14,7 @@ public:
         
     }
     string name() const override{
-        vector<string> v = split(path(), "/");
+        std::vector<string> v = split(path(), "/");
         return v.back();
     };
 
@@ -29,7 +29,7 @@ public:
     }
 
     void remove(string path){
-        vector<Node *>::iterator it = _child.begin();
+        std::vector<Node *>::iterator it = _child.begin();
         while(it!=_child.end()){
             if(!path.compare((*it)->path())){
                 _child.erase(it);
@@ -49,9 +49,18 @@ public:
         return nullptr;
     }
 
+    Node * find(string path){
+        for(auto c:_child){
+            if(!c->path().compare(path)){
+                return c;
+            }
+        }
+        return nullptr;
+    }
+
     //new add
     string getFolder() const override{
-        vector<string> v = split(_path, "/");
+        std::vector<string> v = split(_path, "/");
         v.pop_back();
         return v.back();
     }
@@ -62,7 +71,7 @@ public:
 
 private: 
     string _path;
-    vector<Node *> _child;
+    std::vector<Node *> _child;
 };
 
 
