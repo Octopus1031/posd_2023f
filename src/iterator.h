@@ -28,7 +28,7 @@ public:
 
 private:
     Folder * _composite;
-    vector<Node *>::iterator _it;
+    std::vector<Node *>::iterator _it;
 };
 
 
