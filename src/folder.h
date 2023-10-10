@@ -77,7 +77,7 @@ public:
 
     FolderIterator * createIterator(){
         return new FolderIterator(this);
-    }    
+    }
 
 private: 
     string _path;

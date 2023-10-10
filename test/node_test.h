@@ -71,7 +71,6 @@ TEST(NodeSuite, FolderIterator){
     folder->add(new File("/Users/user/books/design-pattern.pdf"));
     Folder * folder2 = new Folder("/Users/user/books/SOLID");
     folder2->add(new File("/Users/user/books/SOLID/SOLID-S.pdf"));
-    folder2->add(new File("/Users/user/books/SOLID/SOLID-O.pdf"));
     folder->add(folder2);
     
     FolderIterator * it = folder->createIterator();
@@ -81,8 +80,8 @@ TEST(NodeSuite, FolderIterator){
     ASSERT_EQ("design-pattern.pdf", it->currentItem()->name());
 
     it->next();
-    // ASSERT_FALSE(it->isDone());
-    // ASSERT_EQ("SOLID-S.pdf", it->currentItem()->getChildByName("SOLID-S.pdf")->name());
+    ASSERT_FALSE(it->isDone());
+    ASSERT_EQ("SOLID", it->currentItem()->name());
 
     it->next();
     ASSERT_TRUE(it->isDone());
