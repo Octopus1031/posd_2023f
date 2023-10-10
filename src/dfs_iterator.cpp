@@ -2,6 +2,6 @@
 #include "./node.h"
 // #include "./folder.h"
 
-BfsIterator::BfsIterator(Node * composite): _composite(composite) {}
-
 DfsIterator::DfsIterator(Node * composite): _composite(composite) {}
+
+BfsIterator::BfsIterator(Node * composite): _composite(composite) {}
