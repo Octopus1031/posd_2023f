@@ -4,6 +4,7 @@
 #pragma once 
 
 #include<list>
+#include <vector>
 
 class Node;
 class Folder;
@@ -27,7 +28,7 @@ public:
 
 private:
     Folder * _composite;
-    std::vector<Node *>::iterator _it;
+    vector<Node *>::iterator _it;
 };
 
 
