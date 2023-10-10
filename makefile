@@ -1,5 +1,5 @@
 
-all: dirs foldIterator.o dfsIterator.o bin/ut_all
+all: dirs foldIterator.o bin/ut_all
 
 bin/ut_all: test/ut_all.cpp test/node_test.h src/node.h src/file.h src/folder.h src/iterator.h obj/iterator.o src/dfs_iterator.h
 	g++ -std=c++11 test/ut_all.cpp obj/iterator.o -o bin/ut_all -lgtest -lpthread
