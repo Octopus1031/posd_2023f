@@ -24,13 +24,13 @@ public:
         return _path;
     }
 
-    void add(Node * node) {
+    void add(Node * node) override {
         if(!node->getFolder().compare(this->name())){
             _child.push_back(node);
         }
     }
 
-    void remove(string path){
+    void remove(string path) override {
         std::vector<Node *>::iterator it = _child.begin();
         while(it!=_child.end()){
             if(!path.compare((*it)->path())){
@@ -42,7 +42,7 @@ public:
         
     }
 
-    Node * getChildByName(const char * name) const {
+    Node * getChildByName(const char * name) const override {
         for(auto c:_child){
             if(!c->name().compare(name)){
                 return c;
@@ -51,7 +51,7 @@ public:
         return nullptr;
     }
 
-    Node * find(string path){
+    Node * find(string path) override {
         for(auto c:_child){
             if(!c->path().compare(path)){
                 return c;
@@ -75,7 +75,7 @@ public:
         return v.back();
     }
 
-    FolderIterator * createIterator(){
+    FolderIterator * createIterator() override {
         return new FolderIterator(this);
     }
 

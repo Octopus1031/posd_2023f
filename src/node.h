@@ -14,17 +14,17 @@ public:
     
     virtual string path() const = 0;
     
-    void add(Node * node);
+    virtual void add(Node * node) {}
 
-    void remove(string path);
+    virtual void remove(string path) {}
     
-    Node * getChildByName(const char * name) const;
+    virtual Node * getChildByName(const char * name) const {}
 
-    Node * find(string path);
+    virtual Node * find(string path) {}
 
     virtual int numberOfFiles() const = 0;
 
-    Iterator * createIterator();
+    virtual Iterator * createIterator() {}
 
     // new add
     vector<string> split (string str, string token) const {
