@@ -1,20 +1,32 @@
 #if !defined(DFS_ITERATOR_H)
 #define DFS_ITERATOR_H
 
-class Node;
 #include "iterator.h"
+#include "./node.h"
 
 class DfsIterator: public Iterator {
 public:
-    DfsIterator(Node* composite);
+    DfsIterator(Node* composite): _composite(composite) {}
 
-    void first();
+    void first(){
+        //TODO
+        return;
+    }
 
-    Node * currentItem() const;
+    Node * currentItem() const{
+        //TODO
+        return *_it;
+    }
 
-    void next();
+    void next(){
+        //TODO
+        _it++;
+    }
     
-    bool isDone() const;
+    bool isDone() const{
+        //TODO
+        return false;
+    }
 
 private:
     Node * _composite;
@@ -23,11 +35,26 @@ private:
 
 class BfsIterator: public Iterator {
 public:
-    BfsIterator(Node* composite);
-    void first();
-    Node * currentItem() const;
-    void next();
-    bool isDone() const;
+    BfsIterator(Node* composite): _composite(composite) {}
+    void first(){
+        //TODO
+        return;
+    }
+
+    Node * currentItem() const{
+        //TODO
+        return *_it;
+    }
+
+    void next(){
+        //TODO
+        _it++;
+    }
+    
+    bool isDone() const{
+        //TODO
+        return false;
+    }
 
 private:
     Node * _composite;
