@@ -5,10 +5,12 @@
 #include <vector>
 
 #include "iterator.h"
+// #include "foldIterator.h"
 
 using namespace std;
 
 class Folder: public Node {
+    friend class FolderIterator;
 public:
     Folder(string path):_path(path) {
         
@@ -73,9 +75,9 @@ public:
         return v.back();
     }
 
-    // FolderIterator * createIterator(){
-    //     return new FolderIterator(this);
-    // }    
+    FolderIterator * createIterator(){
+        return new FolderIterator(this);
+    }    
 
 private: 
     string _path;

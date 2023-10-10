@@ -19,7 +19,7 @@ public:
 
 class FolderIterator : public Iterator {
 public:
-    FolderIterator(Folder* composite);
+    FolderIterator(Folder * composite);
     void first();
     Node * currentItem() const;
     void next();

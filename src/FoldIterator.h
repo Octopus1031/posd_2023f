@@ -1,8 +1,11 @@
 #pragma once
 
-class FoldIterater{
+class Node;
+class Folder;
+
+class FolderIterator : public Iterator {
 public:
 
 private:
-
-}
+    
+};
