@@ -1,6 +1,8 @@
 #if !defined(FILE_H)
 #define FILE_H
 
+#include "./node.h"
+
 class File: public Node {
 public:
     File(string path):_path(path) {
