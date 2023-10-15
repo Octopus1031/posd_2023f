@@ -1,88 +1,85 @@
-#if !defined(FOLDER)
-#define FOLDER
+#pragma once
 
-#include <string>
-#include <vector>
-
+#include <list>
+#include "node.h"
 #include "iterator.h"
-// #include "foldIterator.h"
+#include "dfs_iterator.h"
 
 using namespace std;
 
 class Folder: public Node {
     friend class FolderIterator;
+private:
+    list<Node *> _nodes;
+
+protected:
+    void removeChild(Node * target) {
+        _nodes.remove(target);
+    }
+
 public:
-    Folder(string path):_path(path) {
-        
-    }
-    string name() const override{
-        std::vector<string> v = split(path(), "/");
-        return v.back();
-    };
+    Folder(string path): Node(path) {}
 
-    string path() const override{
-        return _path;
-    }
-
-    void add(Node * node) override {
-        if(!node->getFolder().compare(this->name())){
-            _child.push_back(node);
+    void add(Node * node) {
+        if (node->path() != this->path() + "/" + node->name()) {
+            throw string("Incorrect path of node: " + node -> path());
         }
+        _nodes.push_back(node);
+        node->parent(this);
     }
 
-    void remove(string path) override {
-        std::vector<Node *>::iterator it = _child.begin();
-        while(it!=_child.end()){
-            if(!path.compare((*it)->path())){
-                _child.erase(it);
-                break;
-            }
-            it++;
-        }
-        
-    }
-
-    Node * getChildByName(const char * name) const override {
-        for(auto c:_child){
-            if(!c->name().compare(name)){
-                return c;
+    Node * getChildByName(const char * name) const {
+        for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
+            if ((*it)->name() == name) {
+                return *it;
             }
         }
         return nullptr;
     }
 
-    Node * find(string path) override {
-        for(auto c:_child){
-            if(!c->path().compare(path)){
-                return c;
-            }
+    int numberOfFiles() const {
+        int num = 0;
+        if (_nodes.size() == 0) {
+            return 0;
         }
-        return nullptr;
-    }
-
-    int numberOfFiles() const override{
-        int p = 0;
-        for(auto c: _child){
-            p += c->numberOfFiles();
+        for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
+            num += (*it)->numberOfFiles();
         }
-        return p;
+        return num;
     }
 
-    //new add
-    string getFolder() const override{
-        std::vector<string> v = split(_path, "/");
-        v.pop_back();
-        return v.back();
-    }
-
-    FolderIterator * createIterator() override {
+    Iterator * createIterator() {
         return new FolderIterator(this);
     }
 
-private: 
-    string _path;
-    std::vector<Node *> _child;
+    Iterator * dfsIterator() {
+        return new DfsIterator(this);
+    }
+
+    Node * find(string path) {
+        if (this->path() == path) {
+            return this;
+        }
+
+        size_t index = path.find(this->path());
+
+        if (string::npos == index) {
+            return nullptr;
+        }
+
+        for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
+            Node * result = (*it)->find(path);
+            if (result) {
+                return result;
+            }
+        }
+        return nullptr;
+    }
+
+    void remove(string path) {
+        Node * target = find(path);
+        if (target) {
+            target->parent()->removeChild(target);
+        }
+    }
 };
-
-
-#endif // FOLDER

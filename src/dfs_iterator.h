@@ -1,64 +1,91 @@
-#if !defined(DFS_ITERATOR_H)
-#define DFS_ITERATOR_H
+#pragma once
+
+#include <stack>
+#include <list>
 
 #include "iterator.h"
-#include "./node.h"
 
 class DfsIterator: public Iterator {
 public:
-    DfsIterator(Node* composite): _composite(composite) {}
+    DfsIterator(Node* composite) : _root(composite) {}
 
-    void first(){
-        //TODO
-        return;
+    void first() {
+        while(!_stack.empty()){
+            _stack.pop();
+        }
+
+        _curr = _root;
+        _pushCurrIter();
+        next();
     }
 
-    Node * currentItem() const{
-        //TODO
-        return *_it;
+    Node * currentItem() const {
+        return _curr;
     }
 
-    void next(){
-        //TODO
-        _it++;
+    void next() {
+        while(!_stack.empty() && _stack.top()->isDone()){
+            _stack.pop();
+        }
+        if(_stack.empty()){
+            return;
+        }
+        if(!_stack.top()->isDone()){
+            _curr = _stack.top()->currentItem();
+            _stack.top()->next();
+            _pushCurrIter();
+        }
     }
     
-    bool isDone() const{
-        //TODO
-        return false;
+    bool isDone() const {
+        return _stack.empty();
     }
-
 private:
-    Node * _composite;
-    std::vector<Node *>::iterator _it;
+    Node * _root;
+    Node * _curr;
+    std::stack<Iterator *> _stack;
+
+    void _pushCurrIter() {
+        Iterator * it = _curr->createIterator();
+        it->first();
+        _stack.push(it);
+    }
 };
 
 class BfsIterator: public Iterator {
 public:
-    BfsIterator(Node* composite): _composite(composite) {}
+    BfsIterator(Node* composite) : _root(composite) {}
+
     void first(){
-        //TODO
+        if(!_nextLevel.empty())
+            _nextLevel.clear();
+
+        _curr = _root;
+        _nextLevel.push_back(_curr);
+        next();
+    }
+
+    Node * currentItem() const {
+        return _curr;
+    }
+
+    void next() {
+        Iterator * it = _curr->createIterator();
+        for(it->first(); !it->isDone(); it->next()){
+            _nextLevel.push_back(it->currentItem());
+        }
+
+        _nextLevel.pop_front();
+        _curr = _nextLevel.front();
         return;
     }
-
-    Node * currentItem() const{
-        //TODO
-        return *_it;
-    }
-
-    void next(){
-        //TODO
-        _it++;
-    }
     
-    bool isDone() const{
-        //TODO
-        return false;
+    bool isDone() const {
+        return _nextLevel.empty();
     }
-
 private:
-    Node * _composite;
-    std::vector<Node *>::iterator _it;
+    Node * _root;
+    Node * _curr;
+    std::list<Node *> _nextLevel;
 };
 
-#endif // DFS_ITERATOR_H

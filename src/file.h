@@ -1,35 +1,20 @@
-#if !defined(FILE_H)
-#define FILE_H
+#pragma once
 
-#include "./node.h"
+#include "node.h"
 
 class File: public Node {
 public:
-    File(string path):_path(path) {
-        
-    }
-    string name() const override{
-        std::vector<string> v = split(path(), "/");
-        return v.back();
-    };
+    File(string path): Node(path) {}
 
-    string path() const override{
-        return _path;
-    }
-
-    int numberOfFiles() const override{
+    int numberOfFiles() const {
         return 1;
     }
 
-    //new add
-    string getFolder() const override{
-        std::vector<string> v = split(_path, "/");
-        v.pop_back();
-        return v.back();
+    Node * find(string path) {
+        if (this->path() == path) {
+            return this;
+        }
+        return nullptr;
     }
 
-private: 
-    string _path;
 };
-
-#endif // FILE_H
