@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../src/findByNameVisitor.h"
+#include "../src/find_by_name_visitor.h"
 #include "../src/node.h"
 #include "../src/file.h"
 #include "../src/folder.h"
