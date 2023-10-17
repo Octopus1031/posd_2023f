@@ -1,6 +1,10 @@
 #pragma once 
 
 #include<string>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include "iterator.h"
 #include "null_iterator.h"
 
@@ -13,6 +17,13 @@ private:
 protected:
 
     Node(string path): _path(path) {}
+    // Node(string path){
+    //     struct stat buf;
+    //     stat(path.c_str(), &buf);
+    //     if(S_ISDIR(buf.st_mode)){
+
+    //     }
+    // }
 
 public:
     virtual ~Node() {}

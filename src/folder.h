@@ -18,7 +18,20 @@ protected:
     }
 
 public:
-    Folder(string path): Node(path) {}
+    // Folder(string path): Node(path) {}
+    Folder(string path): Node(path){
+        struct stat buf;
+        if(!stat(path.c_str(), &buf)){
+            if(!S_ISDIR(buf.st_mode)){
+                // Can't work!
+                // throw string("Can't create File obj to a Folder by path" + path);
+                throw exception();
+            }
+        }
+        else{
+            throw exception();
+        }
+    }
 
     void add(Node * node) {
         if (node->path() != this->path() + "/" + node->name()) {
