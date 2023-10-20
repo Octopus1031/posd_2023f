@@ -1,11 +1,10 @@
 #pragma once
 
-#include "file.h"
-#include "folder.h"
+class File;
+class Folder;
 
-class Visitor{
+class Visitor {
 public:
-    // virtual void visitFile(File * file);
-    // virtual void visitFolder(Folder * folder);
+    virtual void visitFile(File * file) = 0;
+    virtual void visitFolder(Folder * folder) = 0;
 };
-

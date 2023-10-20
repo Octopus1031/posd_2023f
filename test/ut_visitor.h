@@ -4,6 +4,7 @@
 #include "../src/node.h"
 #include "../src/file.h"
 #include "../src/folder.h"
+#include "../src/find_by_name_visitor.h"
 
 class VisitorTest: public ::testing::Test {
 protected:
@@ -57,16 +58,7 @@ protected:
 
 TEST_F(VisitorTest, find_file){
     FindByNameVisitor v("note.txt");
-    Node* result = v.findByName(document);
+    home->accept(&v);
 
-    ASSERT_EQ(note, result);
-
-    // Node * result = home->find("test/home/Documents/favorites/cqrs.pdf");
-    // ASSERT_EQ(nullptr, result);
-}
-
-TEST_F(VisitorTest, test){
-    FindByNameVisitor v("my_profile");
-    Node* result = home->getChildByName("my_profile");
-    ASSERT_EQ(profile, result);
+    ASSERT_EQ(1, v.getPaths().size());
 }

@@ -89,10 +89,31 @@ public:
         return nullptr;
     }
 
+    std::list<string> findByName(string name) override {
+        std::list<string> pathList;
+        if (this->name() == name) {
+            pathList.push_back(this->path());
+        }
+
+        for (auto it = _nodes.begin(); it != _nodes.end(); ++it) {
+            std::list<string> paths = (*it)->findByName(name);
+            for (auto i = paths.begin(); i != paths.end(); i++)
+            {
+                pathList.push_back(*i);  
+            }
+        }
+
+        return pathList;
+    }
+
     void remove(string path) {
         Node * target = find(path);
         if (target) {
             target->parent()->removeChild(target);
         }
+    }
+
+    void accept(Visitor * v){
+        v->visitFolder(this);
     }
 };

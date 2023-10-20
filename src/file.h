@@ -1,6 +1,7 @@
 #pragma once
 
 #include "node.h"
+#include "visitor.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -34,4 +35,15 @@ public:
         return nullptr;
     }
 
+    std::list<string> findByName(string name) override {
+        std::list<string> pathList;
+        if (this->name() == name) {
+            pathList.push_back(this->path());
+        }
+        return pathList;
+    }
+
+    void accept(Visitor * v){
+        v->visitFile(this);
+    }
 };

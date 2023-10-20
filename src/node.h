@@ -7,6 +7,7 @@
 
 #include "iterator.h"
 #include "null_iterator.h"
+#include "visitor.h"
 
 using namespace std;
 
@@ -17,13 +18,6 @@ private:
 protected:
 
     Node(string path): _path(path) {}
-    // Node(string path){
-    //     struct stat buf;
-    //     stat(path.c_str(), &buf);
-    //     if(S_ISDIR(buf.st_mode)){
-
-    //     }
-    // }
 
 public:
     virtual ~Node() {}
@@ -69,7 +63,11 @@ public:
 
     virtual Node * find(string path) = 0;
 
+    virtual std::list<string> findByName(string name) = 0;
+
     virtual void remove(string path) {
         throw string("This node does not support deleting sub node");
     }
+
+    virtual void accept(Visitor * visitor) = 0;
 };

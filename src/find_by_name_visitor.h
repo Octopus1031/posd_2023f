@@ -2,29 +2,46 @@
 
 #include <string>
 
-// #include "visitor.h"
-#include "node.h"
+#include "file.h"
+#include "folder.h"
+#include "visitor.h"
 
-class FindByNameVisitor{
+class FindByNameVisitor : public Visitor{
 public:
     FindByNameVisitor(const char * name): _name(name) {
     }
 
-    // File* findByName(File* file){
-    //     if(!file->name().compare(_name)){
-    //         return file;
-    //     }
-    //     return nullptr;
-    // }
-    
-    Node * findByName(Node* n){
-        if(!n->name().compare(_name)){
-            return n;
+    void visitFile(File * file){
+        if(!file->name().compare(_name)){
+            _path.push_back(file->path());
         }
-        return n->getChildByName(_name);
     }
+
+    void visitFolder(Folder * folder){
+        if(!folder->name().compare(_name)){
+            _path.push_back(folder->path());
+        }
+        else{
+            auto it = folder->createIterator();
+            for(it->first(); !it->isDone(); it->next()){
+                it->currentItem()->accept(this);
+            }
+        }
+    }
+
+    std::list<string> getPaths() const{
+        return _path;
+    }
+    
+    // Node * findByName(Node* n){
+        // if(!n->name().compare(_name)){
+        //     return n;
+        // }
+    //     return n->getChildByName(_name);
+    // }
     
 
 private:
     const char * _name;
+    std::list<string> _path;
 };
