@@ -1,10 +1,10 @@
 #pragma once 
 
-#include "../src/find_by_name_visitor.h"
 #include "../src/node.h"
 #include "../src/file.h"
 #include "../src/folder.h"
 #include "../src/find_by_name_visitor.h"
+#include "../src/stream_out_visitor.h"
 
 class VisitorTest: public ::testing::Test {
 protected:
@@ -68,4 +68,16 @@ TEST_F(VisitorTest, no_such_file){
     home->accept(&v);
 
     ASSERT_EQ(0, v.getPaths().size());
+}
+
+TEST_F(VisitorTest, streamOutTxt){
+    StreamOutVisitor s;
+    note->accept(&s);
+
+    string in = "_____________________________________________\ntest/home/Documents/note.txt\n---------------------------------------------\nThis is note.txt\nThis is second line\nthis is end of file\n_____________________________________________";
+    // string in = "test/home/Documents/note.txt\nThis is note.txt\nThis is second line\nthis is end of file";
+    // ASSERT_TRUE( !in.compare(s.getResult()) );
+    ASSERT_EQ(in, s.getResult());
+    // ASSERT_EQ("This is note.txt\nThis is second line\nthis is end of file", s.getResult());
+    // ASSERT_EQ("hello", s.getResult());
 }
