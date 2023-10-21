@@ -89,6 +89,4 @@ TEST_F(VisitorTest, streamOutFolder){
     f->accept(&s);
     string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n";
     ASSERT_EQ(in, s.getResult());
-    // ASSERT_EQ(2, s.getC());
-    // ASSERT_EQ(f1->path(), f->findByName("file1.txt").front());
 }

@@ -9,9 +9,6 @@
 
 class StreamOutVisitor : public Visitor {
 public:
-    StreamOutVisitor(){
-        // c = 0;
-    }
     void visitFile(File * file){
         result += "_____________________________________________\n";
         result += file->path();
@@ -32,7 +29,6 @@ public:
         for(it->first(); !it->isDone(); it->next()){
             it->currentItem()->accept(this);
             result += "\n\n";
-            // c++;
         }
     }
 
@@ -40,11 +36,6 @@ public:
         return result;
     }
 
-    // int getC(){
-    //     return c;
-    // }
-
 private:
     string result;
-    // int c;
 };
