@@ -9,9 +9,11 @@
 
 class StreamOutVisitor : public Visitor {
 public:
+    StreamOutVisitor(){
+        // c = 0;
+    }
     void visitFile(File * file){
-        // return the path of the file and the entire content of the target file
-        result = "_____________________________________________\n";
+        result += "_____________________________________________\n";
         result += file->path();
         result += "\n---------------------------------------------\n" ;
         ifstream ifs(file->path(), ios::in);
@@ -26,13 +28,23 @@ public:
     }
 
     void visitFolder(Folder * folder){
-
+        auto it = folder->createIterator();
+        for(it->first(); !it->isDone(); it->next()){
+            it->currentItem()->accept(this);
+            result += "\n\n";
+            // c++;
+        }
     }
 
     string getResult() const{
         return result;
     }
 
+    // int getC(){
+    //     return c;
+    // }
+
 private:
     string result;
+    // int c;
 };

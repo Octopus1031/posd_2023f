@@ -70,14 +70,25 @@ TEST_F(VisitorTest, no_such_file){
     ASSERT_EQ(0, v.getPaths().size());
 }
 
-TEST_F(VisitorTest, streamOutTxt){
+TEST_F(VisitorTest, streamOutFile){
     StreamOutVisitor s;
     note->accept(&s);
 
     string in = "_____________________________________________\ntest/home/Documents/note.txt\n---------------------------------------------\nThis is note.txt\nThis is second line\nthis is end of file\n_____________________________________________";
-    // string in = "test/home/Documents/note.txt\nThis is note.txt\nThis is second line\nthis is end of file";
-    // ASSERT_TRUE( !in.compare(s.getResult()) );
     ASSERT_EQ(in, s.getResult());
-    // ASSERT_EQ("This is note.txt\nThis is second line\nthis is end of file", s.getResult());
-    // ASSERT_EQ("hello", s.getResult());
+}
+
+TEST_F(VisitorTest, streamOutFolder){
+    StreamOutVisitor s;
+    Folder* f = new Folder("test/home/testStreamOut");
+    File* f1 = new File("test/home/testStreamOut/file1.txt");
+    File* f2 = new File("test/home/testStreamOut/file2.txt");
+    f->add(f1);
+    f->add(f2);
+
+    f->accept(&s);
+    string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n";
+    ASSERT_EQ(in, s.getResult());
+    // ASSERT_EQ(2, s.getC());
+    // ASSERT_EQ(f1->path(), f->findByName("file1.txt").front());
 }
