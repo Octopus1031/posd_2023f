@@ -33,14 +33,6 @@ public:
         return _path;
     }
     
-    // Node * findByName(Node* n){
-        // if(!n->name().compare(_name)){
-        //     return n;
-        // }
-    //     return n->getChildByName(_name);
-    // }
-    
-
 private:
     const char * _name;
     std::list<string> _path;

@@ -62,3 +62,10 @@ TEST_F(VisitorTest, find_file){
 
     ASSERT_EQ(1, v.getPaths().size());
 }
+
+TEST_F(VisitorTest, no_such_file){
+    FindByNameVisitor v("not_exist");
+    home->accept(&v);
+
+    ASSERT_EQ(0, v.getPaths().size());
+}

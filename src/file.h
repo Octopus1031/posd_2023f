@@ -24,11 +24,11 @@ public:
         }
     }
 
-    int numberOfFiles() const {
+    int numberOfFiles() const override{
         return 1;
     }
 
-    Node * find(string path) {
+    Node * find(string path) override{
         if (this->path() == path) {
             return this;
         }
@@ -43,7 +43,7 @@ public:
         return pathList;
     }
 
-    void accept(Visitor * v){
+    void accept(Visitor * v) override{
         v->visitFile(this);
     }
 };
