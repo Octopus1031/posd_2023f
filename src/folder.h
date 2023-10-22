@@ -10,7 +10,6 @@ using namespace std;
 class Folder: public Node {
 private:
     list<Node *> _nodes;
-    // time_t record_time;
     bool change, setIterator;
 
 protected:
@@ -19,7 +18,6 @@ protected:
     }
 
 public:
-    // Folder(string path): Node(path) {}
     Folder(string path): Node(path){
         struct stat buf;
         if(!stat(path.c_str(), &buf)){
@@ -32,7 +30,6 @@ public:
         else{
             throw exception();
         }
-        // record_time = buf.st_mtime;
         change = false;
         setIterator = false;
     }
@@ -74,11 +71,6 @@ public:
         }
         ~FolderIterator() {}
         void first(){
-            // struct stat buf;
-            // stat(_host->path().c_str(), &buf);
-            // if(buf.st_mtime != _host->getRecordTime()){
-            //     throw exception();
-            // }
             if(_host->getChangeAfterSetupIterator())
                 throw exception();
             _current = _host->_nodes.begin();
@@ -87,12 +79,6 @@ public:
             return *_current;
         }
         void next(){
-            // struct stat buf;
-            // stat(_host->path().c_str(), &buf);
-            // if(buf.st_mtime != _host->getRecordTime()){
-            //     throw exception();
-            // }
-
             if(_host->getChangeAfterSetupIterator())
                 throw exception();
             _current++;
@@ -163,10 +149,6 @@ public:
     void accept(Visitor * v) override{
         v->visitFolder(this);
     }
-
-    // time_t getRecordTime(){
-    //     return record_time;
-    // }
 
     void setupIterator(){
         setIterator = true;
