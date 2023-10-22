@@ -8,9 +8,9 @@
 using namespace std;
 
 class Folder: public Node {
-    // friend class FolderIterator;
 private:
     list<Node *> _nodes;
+    time_t record_time;
 
 protected:
     void removeChild(Node * target) override{
@@ -31,6 +31,7 @@ public:
         else{
             throw exception();
         }
+        record_time = buf.st_mtime;
     }
 
     void add(Node * node) override{
@@ -66,12 +67,24 @@ public:
         FolderIterator(Folder* composite):_host(composite) {}
         ~FolderIterator() {}
         void first(){
+            struct stat buf;
+            stat(_host->path().c_str(), &buf);
+            if(buf.st_mtime != _host->getRecordTime()){
+                throw exception();
+            }
+
             _current = _host->_nodes.begin();
         }
         Node * currentItem() const{
             return *_current;
         }
         void next(){
+            struct stat buf;
+            stat(_host->path().c_str(), &buf);
+            if(buf.st_mtime != _host->getRecordTime()){
+                throw exception();
+            }
+            
             _current++;
         }
         bool isDone() const{
@@ -137,5 +150,9 @@ public:
 
     void accept(Visitor * v) override{
         v->visitFolder(this);
+    }
+
+    time_t getRecordTime(){
+        return record_time;
     }
 };

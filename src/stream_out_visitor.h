@@ -31,7 +31,6 @@ public:
             if( typeid( *(it->currentItem()) )==typeid(File) )
                 result += "\n";
         }
-        // result += "\n\n";
     }
 
     string getResult() const{

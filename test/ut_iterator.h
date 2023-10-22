@@ -6,6 +6,9 @@
 #include "../src/iterator.h"
 #include "../src/dfs_iterator.h"
 
+#include <fstream>
+#include <iostream>
+
 class IteratorTest: public ::testing::Test {
 protected:
     virtual void SetUp() {
@@ -145,4 +148,32 @@ TEST_F(IteratorTest, BFS) {
 
     bfsIt->next();
     ASSERT_TRUE(bfsIt->isDone());
+}
+
+TEST_F(IteratorTest, folderChange){
+    Folder* f = new Folder("test/home/testStreamOut");
+    File* f1 = new File("test/home/testStreamOut/file1.txt");
+    File* f2 = new File("test/home/testStreamOut/file2.txt");
+    f->add(f1);
+    f->add(f2);
+    
+    auto it = f->createIterator();
+    it->first();
+    it->next(); //still ok
+
+    string text("I'm newFile.txt\n");
+    string filename("test/home/testStreamOut/newFile.txt");
+    fstream outfile;
+
+    remove(filename.c_str());
+
+    outfile.open(filename, std::ios_base::app);
+    if (!outfile.is_open()) {
+        throw exception();
+    } else {
+        outfile.write(text.data(), text.size());
+    }
+
+    ASSERT_ANY_THROW(it->first());
+    ASSERT_ANY_THROW(it->next());
 }
