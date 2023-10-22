@@ -8,7 +8,7 @@
 using namespace std;
 
 class Folder: public Node {
-    friend class FolderIterator;
+    // friend class FolderIterator;
 private:
     list<Node *> _nodes;
 
@@ -60,6 +60,28 @@ public:
         }
         return num;
     }
+
+    class FolderIterator : public Iterator {
+    public:
+        FolderIterator(Folder* composite):_host(composite) {}
+        ~FolderIterator() {}
+        void first(){
+            _current = _host->_nodes.begin();
+        }
+        Node * currentItem() const{
+            return *_current;
+        }
+        void next(){
+            _current++;
+        }
+        bool isDone() const{
+            return _current == _host->_nodes.end();
+        }
+
+    private:
+        Folder* const _host;
+        std::list<Node *>::iterator _current;
+    };
 
     Iterator * createIterator() override{
         return new FolderIterator(this);
