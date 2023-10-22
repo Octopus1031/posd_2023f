@@ -161,18 +161,20 @@ TEST_F(IteratorTest, folderChange){
     it->first();
     it->next(); //still ok
 
-    string text("I'm newFile.txt\n");
-    string filename("test/home/testStreamOut/newFile.txt");
-    fstream outfile;
+    // string text("I'm newFile.txt\n");
+    // string filename("test/home/testStreamOut/newFile.txt");
+    // fstream outfile;
 
-    remove(filename.c_str());
+    // remove(filename.c_str());
 
-    outfile.open(filename, std::ios_base::app);
-    if (!outfile.is_open()) {
-        throw exception();
-    } else {
-        outfile.write(text.data(), text.size());
-    }
+    // outfile.open(filename, std::ios_base::app);
+    // if (!outfile.is_open()) {
+    //     throw exception();
+    // } else {
+    //     outfile.write(text.data(), text.size());
+    // }
+    Folder* fo2 = new Folder("test/home/testStreamOut/folder2");
+    f->add(fo2);
 
     ASSERT_ANY_THROW(it->first());
     ASSERT_ANY_THROW(it->next());

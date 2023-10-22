@@ -10,7 +10,8 @@ using namespace std;
 class Folder: public Node {
 private:
     list<Node *> _nodes;
-    time_t record_time;
+    // time_t record_time;
+    bool change, setIterator;
 
 protected:
     void removeChild(Node * target) override{
@@ -31,7 +32,9 @@ public:
         else{
             throw exception();
         }
-        record_time = buf.st_mtime;
+        // record_time = buf.st_mtime;
+        change = false;
+        setIterator = false;
     }
 
     void add(Node * node) override{
@@ -40,6 +43,8 @@ public:
         }
         _nodes.push_back(node);
         node->parent(this);
+        if(setIterator)
+            change = true;
     }
 
     Node * getChildByName(const char * name) const override{
@@ -64,27 +69,32 @@ public:
 
     class FolderIterator : public Iterator {
     public:
-        FolderIterator(Folder* composite):_host(composite) {}
+        FolderIterator(Folder* composite):_host(composite) {
+            composite->setupIterator();
+        }
         ~FolderIterator() {}
         void first(){
-            struct stat buf;
-            stat(_host->path().c_str(), &buf);
-            if(buf.st_mtime != _host->getRecordTime()){
+            // struct stat buf;
+            // stat(_host->path().c_str(), &buf);
+            // if(buf.st_mtime != _host->getRecordTime()){
+            //     throw exception();
+            // }
+            if(_host->getChangeAfterSetupIterator())
                 throw exception();
-            }
-
             _current = _host->_nodes.begin();
         }
         Node * currentItem() const{
             return *_current;
         }
         void next(){
-            struct stat buf;
-            stat(_host->path().c_str(), &buf);
-            if(buf.st_mtime != _host->getRecordTime()){
+            // struct stat buf;
+            // stat(_host->path().c_str(), &buf);
+            // if(buf.st_mtime != _host->getRecordTime()){
+            //     throw exception();
+            // }
+
+            if(_host->getChangeAfterSetupIterator())
                 throw exception();
-            }
-            
             _current++;
         }
         bool isDone() const{
@@ -146,13 +156,23 @@ public:
         if (target) {
             target->parent()->removeChild(target);
         }
+        if(setIterator)
+            change = true;
     }
 
     void accept(Visitor * v) override{
         v->visitFolder(this);
     }
 
-    time_t getRecordTime(){
-        return record_time;
+    // time_t getRecordTime(){
+    //     return record_time;
+    // }
+
+    void setupIterator(){
+        setIterator = true;
+    }
+
+    bool getChangeAfterSetupIterator(){
+        return change;
     }
 };
