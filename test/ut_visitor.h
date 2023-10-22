@@ -74,7 +74,7 @@ TEST_F(VisitorTest, streamOutFile){
     StreamOutVisitor s;
     note->accept(&s);
 
-    string in = "_____________________________________________\ntest/home/Documents/note.txt\n---------------------------------------------\nThis is note.txt\nThis is second line\nthis is end of file\n_____________________________________________";
+    string in = "_____________________________________________\ntest/home/Documents/note.txt\n---------------------------------------------\nThis is note.txt\nThis is second line\nthis is end of file\n_____________________________________________\n";
     ASSERT_EQ(in, s.getResult());
 }
 
@@ -87,6 +87,6 @@ TEST_F(VisitorTest, streamOutFolder){
     f->add(f2);
 
     f->accept(&s);
-    string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n";
+    string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n\n\n";
     ASSERT_EQ(in, s.getResult());
 }

@@ -20,7 +20,7 @@ public:
         stringstream ss;
         ss << ifs.rdbuf();
         result += ss.str();
-        result += "\n_____________________________________________";
+        result += "\n_____________________________________________\n";
         ifs.close();
     }
 
@@ -28,8 +28,9 @@ public:
         auto it = folder->createIterator();
         for(it->first(); !it->isDone(); it->next()){
             it->currentItem()->accept(this);
-            result += "\n\n";
+            result += "\n";
         }
+        result += "\n\n";
     }
 
     string getResult() const{
