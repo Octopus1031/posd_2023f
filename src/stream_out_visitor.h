@@ -10,9 +10,6 @@
 class StreamOutVisitor : public Visitor {
 public:
     void visitFile(File * file){
-        // if(result.length()!=0){
-        //     result+="\n";
-        // }
         result += "_____________________________________________\n";
         result += file->path();
         result += "\n---------------------------------------------\n" ;
@@ -31,7 +28,8 @@ public:
         auto it = folder->createIterator();
         for(it->first(); !it->isDone(); it->next()){
             it->currentItem()->accept(this);
-            result += "\n";
+            if( typeid( *(it->currentItem()) )==typeid(File) )
+                result += "\n";
         }
         // result += "\n\n";
     }

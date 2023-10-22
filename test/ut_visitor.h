@@ -85,8 +85,15 @@ TEST_F(VisitorTest, streamOutFolder){
     File* f2 = new File("test/home/testStreamOut/file2.txt");
     f->add(f1);
     f->add(f2);
+    Folder* fo2 = new Folder("test/home/testStreamOut/folder2");
+    File* f3 = new File("test/home/testStreamOut/folder2/file3.txt");
+    File* f4 = new File("test/home/testStreamOut/folder2/file4.txt");
+    fo2->add(f3);
+    fo2->add(f4);
+    f->add(fo2);
+
 
     f->accept(&s);
-    string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n";
+    string in = "_____________________________________________\ntest/home/testStreamOut/file1.txt\n---------------------------------------------\nhello, world\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/file2.txt\n---------------------------------------------\nThis is file 2\nThis is second line\nthis is end of file\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/folder2/file3.txt\n---------------------------------------------\nfile3.txt\n_____________________________________________\n\n_____________________________________________\ntest/home/testStreamOut/folder2/file4.txt\n---------------------------------------------\nfile4.txt\n_____________________________________________\n\n";
     ASSERT_EQ(in, s.getResult());
 }
