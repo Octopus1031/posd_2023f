@@ -179,3 +179,13 @@ TEST_F(IteratorTest, orderByName){
     it->next();
     ASSERT_TRUE(it->isDone());
 }
+
+TEST_F(IteratorTest, orderByNameChanged){
+    Iterator * it = home->createIterator(OrderBy::Name);
+
+    it->first();
+    home->add(new File("structure/home/hello.txt"));
+
+    ASSERT_ANY_THROW(it->next());
+    ASSERT_ANY_THROW(it->first());
+}
