@@ -1,41 +1,37 @@
-#pragma once 
-
 #include "../src/node.h"
 #include "../src/folder.h"
 #include "../src/file.h"
 #include "../src/iterator.h"
 #include "../src/dfs_iterator.h"
-
-#include <fstream>
-#include <iostream>
+#include "../src/order_by.h"
 
 class IteratorTest: public ::testing::Test {
 protected:
     virtual void SetUp() {
-        home = new Folder("test/home");
+        home = new Folder("structure/home");
 
-        profile = new File("test/home/my_profile");
+        profile = new File("structure/home/my_profile");
         home->add(profile);
 
-        document = new Folder("test/home/Documents");
+        document = new Folder("structure/home/Documents");
         home->add(document);
 
-        favorite = new Folder("test/home/Documents/favorites");
+        favorite = new Folder("structure/home/Documents/favorites");
         document->add(favorite);
-        ddd = new File("test/home/Documents/favorites/domain-driven-design.pdf");
+        ddd = new File("structure/home/Documents/favorites/domain-driven-design.pdf");
         favorite->add(ddd);
-        ca = new File("test/home/Documents/favorites/clean-architecture.pdf");
+        ca = new File("structure/home/Documents/favorites/clean-architecture.pdf");
         favorite->add(ca);
-        cqrs = new File("test/home/Documents/favorites/cqrs.pdf");
+        cqrs = new File("structure/home/Documents/favorites/cqrs.pdf");
         favorite->add(cqrs);
 
-        note = new File("test/home/Documents/note.txt");
+        note = new File("structure/home/Documents/note.txt");
         document->add(note);
 
-        download = new Folder("test/home/Downloads");
+        download = new Folder("structure/home/Downloads");
         home->add(download);
 
-        funny = new File("test/home/Downloads/funny.png");
+        funny = new File("structure/home/Downloads/funny.png");
         download->add(funny);
     }
 
@@ -79,6 +75,24 @@ TEST_F(IteratorTest, Normal) {
 
     it->next();
     ASSERT_TRUE(it->isDone());
+}
+
+TEST_F(IteratorTest, NotAvaliableIterator) {
+    Iterator * it = home->createIterator();
+    it->first();
+    ASSERT_FALSE(it->isDone());
+    
+    ASSERT_EQ("my_profile", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("Documents", it->currentItem()->name());
+    
+    home->add(new File("structure/home/hello.txt"));
+    std::cout << "1" << std::endl;
+    ASSERT_ANY_THROW(it->next());
+    ASSERT_ANY_THROW(it->first());
+    ASSERT_EQ("Documents", it->currentItem()->name());
+    ASSERT_FALSE(it->isDone());
 }
 
 TEST_F(IteratorTest, DFS) {
@@ -150,20 +164,18 @@ TEST_F(IteratorTest, BFS) {
     ASSERT_TRUE(bfsIt->isDone());
 }
 
-TEST_F(IteratorTest, folderChange){
-    Folder* f = new Folder("test/home/testStreamOut");
-    File* f1 = new File("test/home/testStreamOut/file1.txt");
-    File* f2 = new File("test/home/testStreamOut/file2.txt");
-    f->add(f1);
-    f->add(f2);
-    
-    auto it = f->createIterator();
+TEST_F(IteratorTest, orderByName){
+    Iterator * it = home->createIterator(OrderBy::Name);
+
     it->first();
-    it->next(); //still ok
+    ASSERT_EQ("Documents", it->currentItem()->name());
 
-    Folder* fo2 = new Folder("test/home/testStreamOut/folder2");
-    f->add(fo2);
+    it->next();
+    ASSERT_EQ("Downloads", it->currentItem()->name());
 
-    ASSERT_ANY_THROW(it->first());
-    ASSERT_ANY_THROW(it->next());
+    it->next();
+    ASSERT_EQ("my_profile", it->currentItem()->name());
+
+    it->next();
+    ASSERT_TRUE(it->isDone());
 }

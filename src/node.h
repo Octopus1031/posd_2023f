@@ -1,13 +1,10 @@
-#pragma once 
+#pragma once
 
 #include<string>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "iterator.h"
-#include "null_iterator.h"
 #include "visitor.h"
+#include "null_iterator.h"
+#include "order_by.h"
 
 using namespace std;
 
@@ -57,7 +54,7 @@ public:
         return new NullIterator();
     }
 
-    virtual Iterator * dfsIterator() {
+    virtual Iterator * createIterator(OrderBy orderBy) {
         return new NullIterator();
     }
 

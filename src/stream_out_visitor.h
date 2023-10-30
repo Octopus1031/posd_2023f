@@ -9,34 +9,33 @@
 
 class StreamOutVisitor : public Visitor {
 public:
-    void visitFile(File * file){
-        result += "_____________________________________________\n";
-        result += file->path();
-        result += "\n---------------------------------------------\n" ;
-        ifstream ifs(file->path(), ios::in);
-        if(!ifs.is_open()){
-            throw exception();
-        }
-        stringstream ss;
-        ss << ifs.rdbuf();
-        result += ss.str();
-        result += "\n_____________________________________________\n";
-        ifs.close();
+    void visitFile(File * file) override {
+        std::ifstream t(file->path());
+        std::stringstream buffer;
+
+        buffer << t.rdbuf(); 
+
+        _result += "_____________________________________________\n";
+        _result += file->path() + "\n";
+        _result += "---------------------------------------------\n";
+        _result += buffer.str() + "\n";
+        _result += "_____________________________________________\n";
     }
 
-    void visitFolder(Folder * folder){
-        auto it = folder->createIterator();
-        for(it->first(); !it->isDone(); it->next()){
+    void visitFolder(Folder * folder) override {
+        Iterator * it = folder->createIterator();
+
+        for(it->first(); !it->isDone(); it->next()) {
             it->currentItem()->accept(this);
-            if( typeid( *(it->currentItem()) )==typeid(File) )
-                result += "\n";
+            if(dynamic_cast<File *>(it->currentItem()))
+                _result += "\n";
         }
     }
 
-    string getResult() const{
-        return result;
+    string getResult() const {
+        return _result;
     }
 
 private:
-    string result;
+    string _result;
 };

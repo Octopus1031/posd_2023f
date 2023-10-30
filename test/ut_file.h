@@ -1,13 +1,16 @@
-#pragma once 
-
 #include "../src/file.h"
 
 TEST(File, normal) {
-    File hello("test/home/hello.txt");
-    ASSERT_EQ("hello.txt", hello.name());
-    ASSERT_EQ("test/home/hello.txt", hello.path());
+    File hello("structure/file.txt");
+    ASSERT_EQ("file.txt", hello.name());
+    ASSERT_EQ("structure/file.txt", hello.path());
 }
 
-TEST(File, notFileType){
-    ASSERT_ANY_THROW(new File ("test/home/Documents"));
+
+TEST(File, invalid_file) {
+    ASSERT_ANY_THROW(File("/NOT/EXIST/PATH"));
+}
+
+TEST(File, invalid_file_2) {
+    ASSERT_ANY_THROW(File("structure/home"));
 }
