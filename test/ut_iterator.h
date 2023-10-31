@@ -33,6 +33,10 @@ protected:
 
         funny = new File("structure/home/Downloads/funny.png");
         download->add(funny);
+
+        //add
+        // aTestFile = new File("structure/home/aTestFile");
+        // home->add(aTestFile);
     }
 
     void TearDown() {
@@ -46,6 +50,7 @@ protected:
         delete ca;
         delete cqrs;
         delete funny;
+        delete aTestFile;
     }
     
     Node * home;
@@ -58,6 +63,7 @@ protected:
     Node * ca;
     Node * cqrs;
     Node * funny;
+    Node * aTestFile;
 };
 
 TEST_F(IteratorTest, Normal) {
@@ -188,4 +194,27 @@ TEST_F(IteratorTest, orderByNameChanged){
 
     ASSERT_ANY_THROW(it->next());
     ASSERT_ANY_THROW(it->first());
+}
+
+TEST_F(IteratorTest, orderByNameWithFolderFirst){
+    //setting
+    aTestFile = new File("structure/home/aTestFile");
+    home->add(aTestFile);
+
+    Iterator * it = home->createIterator(OrderBy::NameWithFolderFirst);
+
+    it->first();
+    ASSERT_EQ("Documents", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("Downloads", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("aTestFile", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("my_profile", it->currentItem()->name());
+
+    it->next();
+    ASSERT_TRUE(it->isDone());
 }

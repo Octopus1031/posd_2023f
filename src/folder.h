@@ -3,6 +3,7 @@
 #include <list>
 #include <sys/stat.h>
 #include <algorithm>
+#include <typeinfo>
 
 #include "node.h"
 #include "iterator.h"
@@ -220,7 +221,60 @@ public:
     };
 
     class OrderByNameWithFolderFirstIterator: public Iterator {
-    
+        public:
+        OrderByNameWithFolderFirstIterator(Folder* composite, int operationCount) : _host(composite), _operationCount(operationCount)  {
+            sortByNameWithFolderFirst();
+        }
+
+        ~OrderByNameWithFolderFirstIterator() {}
+
+        void first() {
+            checkAvailable();
+            _current = _sortedNodes.begin();
+        }
+
+        Node * currentItem() const {
+            return *_current;
+        }
+
+        void next() {
+            checkAvailable();
+            _current++;
+        }
+
+        bool isDone() const {
+            return _current == _sortedNodes.end();
+        }
+
+    private:
+        Folder* const _host;
+        std::list<Node *>::iterator _current;
+        int _operationCount;
+        std::list<Node *> _sortedNodes;
+
+        void checkAvailable() const {
+            if(_host->_operationCount != _operationCount) {
+                throw "Iterator Not Avaliable";
+            }
+        }
+
+        void sortByNameWithFolderFirst() {
+            for(auto i:_host->_nodes){
+                _sortedNodes.push_back(i);
+            }
+            _sortedNodes.sort(cmp);
+            //ToDo: 寫自定義cmp 字串比較 瀏覽器現在這篇的比較寫法
+        }
+        static bool cmp(Node * n1, Node * n2){
+            if( typeid(n1) == typeid(n2))
+                return n1->name() < n2->name();
+            else{
+                if( typeid(n1)==typeid(Folder*) )
+                    return true;
+                else
+                    return false;
+            }
+        }
     };
 
     class OrderByKindIterator: public Iterator {
