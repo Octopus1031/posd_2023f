@@ -263,7 +263,6 @@ public:
                 _sortedNodes.push_back(i);
             }
             _sortedNodes.sort(cmp);
-            //ToDo: 寫自定義cmp 字串比較 瀏覽器現在這篇的比較寫法
         }
         static bool cmp(Node * n1, Node * n2){
             if( typeid(n1) == typeid(n2))
