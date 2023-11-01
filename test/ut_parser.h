@@ -1,6 +1,8 @@
 #include "../src/file_system_parser.h" 
 #include "../src/file_system_scanner.h"
 #include "../src/file_system_builder.h"
+#include "../src/file.h"
+#include "../src/folder.h"
 
 #include <string>
 #include <vector>
@@ -32,7 +34,7 @@ TEST(ParserTest, scannerScanType){
     // mac OS 多一個.DS_store檔案
     for(int i=0; i<4; i++){
         scanner->nextNode();
-        // size_t find = 
+        // TODO 遇到"沒.的檔案"會有問題 再看怎麼改
         if( scanner->currentNodeName().find(".")!=string::npos){
             ASSERT_TRUE(scanner->isFile());
         }
@@ -42,6 +44,14 @@ TEST(ParserTest, scannerScanType){
     }
 }
 
-TEST(ParserTest, parser){
+TEST(ParserTest, parserWithOneFile){
+    string path = "test/testUseFolder/testFolder";
+    // FileSystemBuilder* builder = new FileSystemBuilder();
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
     
+    Folder * root = parser->getRoot();
+    ASSERT_TRUE( root->getChildByName("testFile1")!=NULL );
+    ASSERT_TRUE(true);
 }
