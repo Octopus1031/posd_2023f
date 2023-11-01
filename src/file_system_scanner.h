@@ -1,7 +1,6 @@
 #pragma once
 #include <dirent.h>
 #include <string>
-// #include <map>
 #include <vector>
 
 #include "node.h"
@@ -10,9 +9,13 @@ using std::string;
 
 class FileSystemScanner {
 public:
-    bool isFile();
+    bool isFile(){
+        return entry->d_type != DT_DIR;
+    }
 
-    bool isFolder();
+    bool isFolder(){
+        return entry->d_type == DT_DIR;
+    }
 
     bool isDone(){
         return entry==NULL;
@@ -22,7 +25,9 @@ public:
         dir = opendir(path.c_str());
     }
 
-    string currentNodeName();
+    string currentNodeName(){
+        return string(entry->d_name);
+    }
 
     void nextNode(){
         entry = readdir(dir);

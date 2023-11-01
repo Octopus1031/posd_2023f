@@ -4,6 +4,7 @@
 
 #include "folder.h"
 #include "file_system_builder.h"
+#include "file_system_scanner.h"
 
 using std::string;
 
