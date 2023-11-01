@@ -217,4 +217,6 @@ TEST_F(IteratorTest, orderByNameWithFolderFirst){
 
     it->next();
     ASSERT_TRUE(it->isDone());
+
+    ASSERT_TRUE(true);
 }

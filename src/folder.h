@@ -158,7 +158,7 @@ public:
             return new OrderByNameIterator(this, _operationCount);
         }
         else if(orderBy == OrderBy::NameWithFolderFirst){
-
+            return new OrderByNameWithFolderFirstIterator(this, _operationCount);
         }
         else if(orderBy == OrderBy::Kind){
 
