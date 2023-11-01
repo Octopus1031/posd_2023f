@@ -26,24 +26,13 @@ public:
 
     void nextNode(){
         entry = readdir(dir);
-        while( string(entry->d_name).compare(".") || string(entry->d_name).compare("..") ){
-            entry = readdir(dir);
+        if( !this->isDone() ){
+            while( !string(entry->d_name).compare(".") || !string(entry->d_name).compare("..") ){
+                entry = readdir(dir);
+            }
+            nodeVector.push_back(entry->d_name);
         }
-        // nodeList.push_back(entry->d_name);
-        nodeVector.push_back(entry->d_name);
     }
-
-    // string nextNode(){
-    //     entry = readdir(dir);
-    //     while( string(entry->d_name).compare(".") || string(entry->d_name).compare("..") ){
-    //         entry = readdir(dir);
-    //     }
-    //     return entry->d_name;
-    // }
-
-    // map<std::string, Node*> * getMap(){
-    //     return m;
-    // }
 
     std::vector<string> getVector(){
         return nodeVector;

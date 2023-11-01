@@ -17,12 +17,11 @@ TEST(ParserTest, Scanner){
     scanner->nextNode();
     scanner->nextNode();
     scanner->nextNode();
+    scanner->nextNode();
     ASSERT_TRUE(scanner->isDone());
 
-    // map<std:string, Node*> * m = scanner->getMap();
-    std::vector<string> l = scanner->getVector();
-    ASSERT_TRUE( find(l.begin(), l.end(), "home") );
-    ASSERT_TRUE( find(l.begin(), l.end(), "vistor") );
-    ASSERT_TRUE( find(l.begin(), l.end(), "flie.txt") );
-    // ASSERT_FALSE( find(l.begin(), l.end(), "12345" ));
+    std::vector<string> v = scanner->getVector();
+    ASSERT_TRUE( find(v.begin(), v.end(), "home")!=v.end() );
+    ASSERT_TRUE( find(v.begin(), v.end(), "visitor")!=v.end() );
+    ASSERT_TRUE( find(v.begin(), v.end(), "file.txt")!=v.end() );
 }
