@@ -45,3 +45,29 @@ TEST(JSonSuite, nullIterator){
     ASSERT_ANY_THROW(it->currentKey());
     ASSERT_ANY_THROW(it->currentValue());
 }
+
+TEST(JSonSuite, jsonObjectIterator){
+    JsonObject *jo = new JsonObject;
+    Value * v1 = new StringValue("value1");
+    jo->set("key1", v1);
+    Value * v2 = new StringValue("value2");
+    jo->set("key2", v2);
+    JsonObject *j_composite = new JsonObject;
+    j_composite->set("keyc", jo);
+
+    JsonIterator * itc = j_composite->createIterator();
+    itc->first();
+    ASSERT_EQ("keyc", itc->currentKey());
+
+    JsonIterator * it1 = itc->currentValue()->createIterator();
+    it1->first();
+    ASSERT_EQ("key1", it1->currentKey());
+    ASSERT_EQ("\"value1\"", it1->currentValue()->toString());
+
+    it1->next();
+    ASSERT_EQ("key2", it1->currentKey());
+    ASSERT_EQ("\"value2\"", it1->currentValue()->toString());
+
+    itc->next();
+    ASSERT_TRUE(itc->isDone());
+}
