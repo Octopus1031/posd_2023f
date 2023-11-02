@@ -56,6 +56,7 @@ TEST(ParserTest, parserWithOneFile){
 
 TEST(ParserTest, parserWithFiles){
     string path = "test/testUseFolder/testFolder4";
+    // string path = "test/testUseFolder/testFolder2/testFolder3";
     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
     parser->setPath(path.c_str());
     parser->parse();
@@ -66,13 +67,37 @@ TEST(ParserTest, parserWithFiles){
     ASSERT_TRUE( root->getChildByName("testFile3")!=NULL );
 }
 
-// TEST(ParserTest, parserWithOneFolder){
-//     string path = "test/testUseFolder/testFolder2";
+TEST(ParserTest, folderWithNothing){
+    string path = "test/testUseFolder/testFolder2/testFolder3";
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
+    
+    ASSERT_EQ( 0, parser->getVector().size() );
+}
+
+TEST(ParserTest, parserWithOneFolder){
+    string path = "test/testUseFolder/testFolder2";
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
+    
+    Folder * root = parser->getRoot();
+    ASSERT_EQ("testFolder2", root->name());
+    ASSERT_TRUE( root->getChildByName("testFolder3")!=NULL );
+}
+
+// TEST(ParserTest, parserWithFolderVisitor){
+//     string path = "structure/visitor";
 //     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
 //     parser->setPath(path.c_str());
 //     parser->parse();
     
-//     // Folder * root = parser->getRoot();
-//     // ASSERT_TRUE( root->getChildByName("testFolder3")!=NULL );
-//     ASSERT_TRUE(true);
+//     Folder * root = parser->getRoot();
+//     ASSERT_EQ("visitor", root->name());
+//     ASSERT_TRUE( root->getChildByName("nested")!=NULL );
+//     ASSERT_TRUE( root->getChildByName("file1.txt")!=NULL );
+//     ASSERT_TRUE( root->getChildByName("file2.txt")!=NULL );
+//     ASSERT_TRUE( root->find("structure/visitor/nested")->getChildByName("file3.txt")!=NULL );
+//     ASSERT_TRUE( root->find("structure/visitor/nested")->getChildByName("file4.txt")!=NULL );
 // }

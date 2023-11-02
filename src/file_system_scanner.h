@@ -36,13 +36,20 @@ public:
     }
 
     void nextNode(){
-        if( !start ){ start = true; }
+        if( !start ){ 
+            start = true; 
+        }
         entry = readdir(dir);
         if( !this->isDone() ){
-            while( !string(entry->d_name).compare(".") || !string(entry->d_name).compare("..") ){
+            while( entry!=NULL && ( !string(entry->d_name).compare(".") || !string(entry->d_name).compare("..") ) ){
                 entry = readdir(dir);
+                // if(entry==NULL){
+                //     break;
+                // }
             }
-            nodeVector.push_back(entry->d_name);
+            if(entry!=NULL){
+                nodeVector.push_back(entry->d_name);
+            }
         }
     }
 

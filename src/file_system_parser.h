@@ -25,13 +25,13 @@ public:
                 _builder->buildFile(_path + "/" + _scanner->currentNodeName());
             }
 
-            // else if( _scanner->isFolder() ){
-            //     _builder->buildFolder(_path + "/" + _scanner->currentNodeName());
-            //     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
-            //     parser->setPath(_path + "/"  + _scanner->currentNodeName());
-            //     parser->parse();
-            //     // _builder->endFolder();
-            // }
+            else if( _scanner->isFolder() ){
+                _builder->buildFolder(_path + "/" + _scanner->currentNodeName());
+                FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+                parser->setPath(_path + "/"  + _scanner->currentNodeName());
+                parser->parse();
+                _builder->endFolder();
+            }
             _scanner->nextNode();
         }  
     }
@@ -40,6 +40,10 @@ public:
         _path = path;
         _scanner->setPath(_path);
         _builder->setPath(_path);
+    }
+
+    std::vector<string> getVector(){
+        return _scanner->getVector();
     }
 
 private:
