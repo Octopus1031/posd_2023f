@@ -13,18 +13,15 @@ public:
         start = false;
     }
     bool isFile(){
-        // if(this->isDone()){ return false; }
         return entry->d_type != DT_DIR;
     }
 
     bool isFolder(){
-        // if(this->isDone()){ return false; }
         return entry->d_type == DT_DIR;
     }
 
     bool isDone(){
         return entry==NULL && start;
-        // return entry==NULL;
     }
 
     void setPath(string path){
@@ -43,9 +40,6 @@ public:
         if( !this->isDone() ){
             while( entry!=NULL && ( !string(entry->d_name).compare(".") || !string(entry->d_name).compare("..") ) ){
                 entry = readdir(dir);
-                // if(entry==NULL){
-                //     break;
-                // }
             }
             if(entry!=NULL){
                 nodeVector.push_back(entry->d_name);
@@ -62,7 +56,6 @@ public:
     }
 
 private:
-    // map<std::string, Node*> * m;
     std::vector<string> nodeVector;
 
     DIR * dir;

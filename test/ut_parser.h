@@ -87,17 +87,17 @@ TEST(ParserTest, parserWithOneFolder){
     ASSERT_TRUE( root->getChildByName("testFolder3")!=NULL );
 }
 
-// TEST(ParserTest, parserWithFolderNested){
-//     string path = "structure/visitor/nested";
-//     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
-//     parser->setPath(path.c_str());
-//     parser->parse();
+TEST(ParserTest, parserWithFolderNested){
+    string path = "structure/visitor/nested";
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
     
-//     Folder * root = parser->getRoot();
-//     ASSERT_EQ("nested", root->name());
-//     ASSERT_TRUE( root->getChildByName("file3.txt")!=NULL );
-//     ASSERT_TRUE( root->getChildByName("file4.txt")!=NULL );
-// }
+    Folder * root = parser->getRoot();
+    ASSERT_EQ("nested", root->name());
+    ASSERT_TRUE( root->getChildByName("file3.txt")!=NULL );
+    ASSERT_TRUE( root->getChildByName("file4.txt")!=NULL );
+}
 
 TEST(ParserTest, parserWithFolderVisitor){
     string path = "structure/visitor";
@@ -107,7 +107,6 @@ TEST(ParserTest, parserWithFolderVisitor){
     
     Folder * root = parser->getRoot();
     ASSERT_EQ("visitor", root->name());
-    // ASSERT_EQ("nested", parser->test);
     ASSERT_TRUE( root->getChildByName("nested")!=NULL );
     ASSERT_TRUE( root->getChildByName("file1.txt")!=NULL );
     ASSERT_TRUE( root->getChildByName("file2.txt")!=NULL );
@@ -123,7 +122,6 @@ TEST(ParserTest, parserWithFolderStructure){
     
     Folder * root = parser->getRoot();
     ASSERT_EQ("structure", root->name());
-    // ASSERT_EQ("nested", parser->test);
     ASSERT_TRUE( root->getChildByName("home")!=NULL );
     ASSERT_TRUE( root->getChildByName("visitor")!=NULL );
     ASSERT_TRUE( root->getChildByName("file.txt")!=NULL );

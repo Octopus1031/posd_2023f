@@ -16,25 +16,15 @@ public:
 
     void buildFile(string path){
         File * file = new File(path);
-        // if(_stack.empty())
             root->add(file);
-        // else
-        //     _stack.top()->add(file);
     }
 
     void buildFolder(string path){
         Folder * folder = new Folder(path);
-        // _stack.push(folder);
     }
 
-    // void endFolder(){
     void endFolder(Folder *folder){
-        // Folder * folder = _stack.top();
-        // _stack.pop();
-        // if(_stack.empty())
-            root->add(folder);
-        // else
-        //     _stack.top()->add(folder);
+        root->add(folder);
     }
 
     //add
@@ -43,6 +33,5 @@ public:
     }
 
 private:
-    // std::stack<Folder*> _stack;
     Folder * root;
 };
