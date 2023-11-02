@@ -20,18 +20,20 @@ public:
 
     void parse(){
         _scanner->nextNode();
-        if( _scanner->isFile() ){
-            _builder->buildFile(_path + "/" + _scanner->currentNodeName());
-        }
-        // else if( _scanner->isFolder() ){
-            // _builder->buildFolder(_path + "/" + _scanner->currentNodeName());
-            // FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
-            // parser->setPath(_path + "/"  + _scanner->currentNodeName());
-            // parser->parse();
-        // }
-        else{
-            throw string("parse error");
-        }
+        while( !_scanner->isDone() ){
+            if( _scanner->isFile() ){
+                _builder->buildFile(_path + "/" + _scanner->currentNodeName());
+            }
+
+            // else if( _scanner->isFolder() ){
+            //     _builder->buildFolder(_path + "/" + _scanner->currentNodeName());
+            //     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+            //     parser->setPath(_path + "/"  + _scanner->currentNodeName());
+            //     parser->parse();
+            //     // _builder->endFolder();
+            // }
+            _scanner->nextNode();
+        }  
     }
 
     void setPath(string path){

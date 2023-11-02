@@ -46,12 +46,33 @@ TEST(ParserTest, scannerScanType){
 
 TEST(ParserTest, parserWithOneFile){
     string path = "test/testUseFolder/testFolder";
-    // FileSystemBuilder* builder = new FileSystemBuilder();
     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
     parser->setPath(path.c_str());
     parser->parse();
     
     Folder * root = parser->getRoot();
     ASSERT_TRUE( root->getChildByName("testFile1")!=NULL );
-    ASSERT_TRUE(true);
 }
+
+TEST(ParserTest, parserWithFiles){
+    string path = "test/testUseFolder/testFolder4";
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
+    
+    Folder * root = parser->getRoot();
+    ASSERT_TRUE( root->getChildByName("testFile1")!=NULL );
+    ASSERT_TRUE( root->getChildByName("testFile2")!=NULL );
+    ASSERT_TRUE( root->getChildByName("testFile3")!=NULL );
+}
+
+// TEST(ParserTest, parserWithOneFolder){
+//     string path = "test/testUseFolder/testFolder2";
+//     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+//     parser->setPath(path.c_str());
+//     parser->parse();
+    
+//     // Folder * root = parser->getRoot();
+//     // ASSERT_TRUE( root->getChildByName("testFolder3")!=NULL );
+//     ASSERT_TRUE(true);
+// }

@@ -9,16 +9,22 @@ using std::string;
 
 class FileSystemScanner {
 public:
+    FileSystemScanner(){
+        start = false;
+    }
     bool isFile(){
+        // if(this->isDone()){ return false; }
         return entry->d_type != DT_DIR;
     }
 
     bool isFolder(){
+        // if(this->isDone()){ return false; }
         return entry->d_type == DT_DIR;
     }
 
     bool isDone(){
-        return entry==NULL;
+        return entry==NULL && start;
+        // return entry==NULL;
     }
 
     void setPath(string path){
@@ -30,6 +36,7 @@ public:
     }
 
     void nextNode(){
+        if( !start ){ start = true; }
         entry = readdir(dir);
         if( !this->isDone() ){
             while( !string(entry->d_name).compare(".") || !string(entry->d_name).compare("..") ){
@@ -43,10 +50,15 @@ public:
         return nodeVector;
     }
 
+    bool isStart(){
+        return start;
+    }
+
 private:
     // map<std::string, Node*> * m;
     std::vector<string> nodeVector;
 
     DIR * dir;
     struct dirent * entry;
+    bool start;
 };

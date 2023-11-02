@@ -16,20 +16,24 @@ public:
 
     void buildFile(string path){
         File * file = new File(path);
-        if(_stack.empty()){
+        if(_stack.empty())
             root->add(file);
-        }
-        else{
+        else
             _stack.top()->add(file);
-        }
     }
 
     void buildFolder(string path){
-
+        Folder * folder = new Folder(path);
+        _stack.push(folder);
     }
 
     void endFolder(){
-        
+        Folder * folder = _stack.top();
+        _stack.pop();
+        if(_stack.empty())
+            root->add(folder);
+        else
+            _stack.top()->add(folder);
     }
 
     //add
