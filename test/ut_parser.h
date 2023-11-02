@@ -75,8 +75,8 @@ TEST(ParserTest, folderWithNothing){
     parser->setPath(path.c_str());
     parser->parse();
     
-    // ASSERT_EQ( 0, parser->getVector().size() );
-    ASSERT_TRUE(true);
+    ASSERT_EQ( 0, parser->getVector().size() );
+    // ASSERT_TRUE(true);
 }
 
 TEST(ParserTest, parserWithOneFolder){
