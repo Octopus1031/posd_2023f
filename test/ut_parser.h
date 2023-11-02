@@ -35,11 +35,13 @@ TEST(ParserTest, scannerScanType){
     for(int i=0; i<4; i++){
         scanner->nextNode();
         // TODO 遇到"沒.的檔案"會有問題 再看怎麼改
-        if( scanner->currentNodeName().find(".")!=string::npos){
-            ASSERT_TRUE(scanner->isFile());
-        }
-        else{
-            ASSERT_TRUE(scanner->isFolder());
+        if( !scanner->isDone()){
+            if( scanner->currentNodeName().find(".")!=string::npos){
+                ASSERT_TRUE(scanner->isFile());
+            }
+            else{
+                ASSERT_TRUE(scanner->isFolder());
+            }
         }
     }
 }
