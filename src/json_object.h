@@ -2,6 +2,7 @@
 
 #include "value.h"
 #include "json_iterator.h"
+#include "visitor.h"
 
 #include <map>
 class JsonObject : public Value {
@@ -37,6 +38,10 @@ public:
 
     JsonIterator * createIterator(){
         return new JsonObjectIterator(this);
+    }
+
+    void accept(JsonVisitor * visitor){
+        visitor->visitJsonObject(this);
     }
 
     class JsonObjectIterator : public JsonIterator{

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include "value.h"
+#include "visitor.h"
+
 class StringValue : public Value {
 public:
     // StringValue(string key) : _key(key) {}
@@ -14,6 +17,10 @@ public:
 
     JsonIterator * createIterator(){
         return new NullIterator();
+    }
+
+    void accept(JsonVisitor * visitor){
+        visitor->visitStringValue(this);
     }
 
 private:
