@@ -24,7 +24,7 @@ public:
     }
 
     void set(std::string key, Value* value){
-        sets.insert( {key, value} );
+        sets[key] = value;
     }
 
     Value* getValue(std::string k){
