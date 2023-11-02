@@ -34,7 +34,7 @@ public:
                 _builder->endFolder(builder->getRoot());
             }
             _scanner->nextNode();
-        }  
+        }
     }
 
     void setPath(string path){
