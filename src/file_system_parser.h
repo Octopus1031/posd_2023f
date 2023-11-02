@@ -18,6 +18,7 @@ public:
         return _builder->getRoot();
     }
 
+    // string test = "0";
     void parse(){
         _scanner->nextNode();
         while( !_scanner->isDone() ){
@@ -26,11 +27,14 @@ public:
             }
 
             else if( _scanner->isFolder() ){
+                // test = _scanner->currentNodeName();
                 _builder->buildFolder(_path + "/" + _scanner->currentNodeName());
-                FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+                FileSystemBuilder* builder = new FileSystemBuilder();
+                FileSystemParser* parser = new FileSystemParser( builder );
                 parser->setPath(_path + "/"  + _scanner->currentNodeName());
                 parser->parse();
-                _builder->endFolder();
+                _builder->endFolder(builder->getRoot());
+                // _builder->endFolder(builder->getRoot());
             }
             _scanner->nextNode();
         }  
