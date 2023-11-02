@@ -114,3 +114,22 @@ TEST(ParserTest, parserWithFolderVisitor){
     ASSERT_TRUE( root->getChildByName("nested")->getChildByName("file3.txt")!=NULL );
     ASSERT_TRUE( root->getChildByName("nested")->getChildByName("file4.txt")!=NULL );
 }
+
+TEST(ParserTest, parserWithFolderStructure){
+    string path = "structure";
+    FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
+    parser->setPath(path.c_str());
+    parser->parse();
+    
+    Folder * root = parser->getRoot();
+    ASSERT_EQ("structure", root->name());
+    // ASSERT_EQ("nested", parser->test);
+    ASSERT_TRUE( root->getChildByName("home")!=NULL );
+    ASSERT_TRUE( root->getChildByName("visitor")!=NULL );
+    ASSERT_TRUE( root->getChildByName("file.txt")!=NULL );
+    ASSERT_TRUE( root->getChildByName("home")->getChildByName("Documents")!=NULL );
+    ASSERT_TRUE( root->getChildByName("home")->getChildByName("Downloads")!=NULL );
+    ASSERT_TRUE( root->getChildByName("home")->getChildByName("aTestFile")!=NULL );
+    ASSERT_TRUE( root->getChildByName("home")->getChildByName("hello.txt")!=NULL );
+    ASSERT_TRUE( root->getChildByName("home")->getChildByName("my_profile")!=NULL );
+}
