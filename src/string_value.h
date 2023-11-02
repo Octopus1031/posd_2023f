@@ -12,6 +12,10 @@ public:
         return "\"" + _key + "\"";
     }
 
+    JsonIterator * createIterator(){
+        return new NullIterator();
+    }
+
 private:
     std::string _key;
 };

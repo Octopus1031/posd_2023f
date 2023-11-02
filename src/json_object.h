@@ -1,9 +1,13 @@
 #pragma once
 
 #include "value.h"
+#include "json_iterator.h"
 
 #include <map>
 class JsonObject : public Value {
+private:
+    std::map<std::string, Value *> sets;
+
 public:
     std::string toString() {
         std::string s = "{\n";
@@ -31,6 +35,39 @@ public:
         return sets.find(k)->second;
     }
 
-private:
-    std::map<std::string, Value *> sets;
+    JsonIterator * createIterator(){
+        return new JsonObjectIterator(this);
+    }
+
+    class JsonObjectIterator : public JsonIterator{
+    public:
+        JsonObjectIterator(JsonObject * jo): _jo(jo){
+        }
+
+        void first(){
+            it = _jo->sets.begin();
+        }
+
+        std::string currentKey(){
+            return it->first;
+        }
+
+        Value * currentValue(){
+            return it->second;
+        }
+
+        void next(){
+            it++;
+        }
+
+        bool isDone(){
+            return it==_jo->sets.end();
+        }
+
+    private:
+        std::map<std::string, Value *>::iterator it;
+        JsonObject * _jo;
+    };
+
+
 };

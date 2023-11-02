@@ -1,5 +1,6 @@
 #include "../src/json_object.h"
 #include "../src/string_value.h"
+#include "../src/json_iterator.h"
 
 TEST(JSonSuite, OneKeyStringValue) {
     JsonObject *jo = new JsonObject;
@@ -33,4 +34,14 @@ TEST(JSonSuite, Composite) {
     j_composite->set("keyc", jo);
     ASSERT_EQ(jo, j_composite->getValue("keyc"));
     ASSERT_EQ("{\n\"keyc\":{\n\"key1\":\"value1\",\n\"key2\":\"value2\"\n}\n}", j_composite->toString());
+}
+
+TEST(JSonSuite, nullIterator){
+    Value * v1 = new StringValue("value1");
+    JsonIterator * it = v1->createIterator();
+
+    ASSERT_TRUE(it->isDone());
+
+    ASSERT_ANY_THROW(it->currentKey());
+    ASSERT_ANY_THROW(it->currentValue());
 }
