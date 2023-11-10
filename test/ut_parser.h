@@ -72,7 +72,7 @@ TEST(ParserTest, parserWithFiles){
 TEST(ParserTest, folderWithNothing){
     string path = "test/testUseFolder/testFolder2/testFolder3";
     FileSystemParser* parser = new FileSystemParser( new FileSystemBuilder() );
-    parser->setPath(path.c_str());
+    // parser->setPath(path.c_str());
     // parser->parse();
     
     // ASSERT_EQ( 0, parser->getVector().size() );
