@@ -161,7 +161,7 @@ public:
             return new OrderByNameWithFolderFirstIterator(this, _operationCount);
         }
         else if(orderBy == OrderBy::Kind){
-
+            return new OrderByKindIterator(this, _operationCount);
         }
         else{
             throw string("order by error");
@@ -207,13 +207,10 @@ public:
         }
 
         void sortByName() {
-            // std::list<string> _sortedNodesName;
             for(auto i:_host->_nodes){
                 _sortedNodes.push_back(i);
-                // _sortedNodesName.push_back(i->name());
             }
             _sortedNodes.sort(cmp);
-            //ToDo: 寫自定義cmp 字串比較 瀏覽器現在這篇的比較寫法
         }
         static bool cmp(Node * n1, Node * n2){
             return n1->name() < n2->name();
@@ -266,7 +263,83 @@ public:
         }
         static bool cmp(Node * n1, Node * n2){
             if( typeid(n1) == typeid(n2))
-                return n1->name() < n2->name();
+                return n1->name() > n2->name();
+            else{
+                if( typeid(n1)==typeid(Folder*) )
+                    return false;
+                else
+                    return true;
+            }
+        }
+    };
+
+    class OrderByKindIterator: public Iterator {
+    public:
+        OrderByKindIterator(Folder* composite, int operationCount) : _host(composite), _operationCount(operationCount)  {
+            sortByKindWithFolderFirst();
+        }
+
+        ~OrderByKindIterator() {}
+
+        void first() {
+            checkAvailable();
+            _current = _sortedNodes.begin();
+        }
+
+        Node * currentItem() const {
+            return *_current;
+        }
+
+        void next() {
+            checkAvailable();
+            _current++;
+        }
+
+        bool isDone() const {
+            return _current == _sortedNodes.end();
+        }
+
+    private:
+        Folder* const _host;
+        std::list<Node *>::iterator _current;
+        int _operationCount;
+        std::list<Node *> _sortedNodes;
+
+        void checkAvailable() const {
+            if(_host->_operationCount != _operationCount) {
+                throw "Iterator Not Avaliable";
+            }
+        }
+
+        void sortByKindWithFolderFirst() {
+            for(auto i:_host->_nodes){
+                _sortedNodes.push_back(i);
+            }
+            _sortedNodes.sort(cmp);
+        }
+        static bool cmp(Node * n1, Node * n2){
+            if( typeid(n1) == typeid(n2)){
+                // if( typeid(n1)==typeid(Folder*) ){ //both folder
+                    return n1->name() < n2->name();
+                // }
+                // else{ //both file
+                //     bool b1 = n1->name().find(".")!=string::npos && n2->name().find(".")!=string::npos;
+                //     bool b2 = n1->name().find(".")==string::npos && n2->name().find(".")==string::npos;
+                //     //both have filename extension
+                //     if( b1 || b2 ){
+                //         return n1->name() < n2->name();
+                //     }
+                //     //only one have filename extension
+                //     else{
+                //         if( n1->name().find(".")!=string::npos ){
+                //             return true;
+                //         }
+                //         else{
+                //             return false;
+                //         }
+                //     }
+                // }
+            }
             else{
                 if( typeid(n1)==typeid(Folder*) )
                     return true;
@@ -274,9 +347,5 @@ public:
                     return false;
             }
         }
-    };
-
-    class OrderByKindIterator: public Iterator {
-    
     };
 };

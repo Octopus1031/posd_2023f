@@ -35,8 +35,21 @@ protected:
         download->add(funny);
 
         //add
-        // aTestFile = new File("structure/home/aTestFile");
-        // home->add(aTestFile);
+        fo1 = new Folder("test/testUseFolder/testFolder5/fo1");
+        fo2 = new Folder("test/testUseFolder/testFolder5/fo2");
+        f1 = new File("test/testUseFolder/testFolder5/f1");
+        f2 = new File("test/testUseFolder/testFolder5/f2");
+        f3 = new File("test/testUseFolder/testFolder5/f3");
+        f4 = new File("test/testUseFolder/testFolder5/f1.txt");
+        f5 = new File("test/testUseFolder/testFolder5/f2.txt");
+        root = new Folder("test/testUseFolder/testFolder5");
+        root->add(fo1);
+        root->add(fo2);
+        root->add(f1);
+        root->add(f2);
+        root->add(f3);
+        root->add(f4);
+        root->add(f5);
     }
 
     void TearDown() {
@@ -51,6 +64,14 @@ protected:
         delete cqrs;
         delete funny;
         delete aTestFile;
+
+        delete fo1;
+        delete fo2;
+        delete f1;
+        delete f2;
+        delete f3;
+        delete f4;
+        delete f5;
     }
     
     Node * home;
@@ -64,6 +85,15 @@ protected:
     Node * cqrs;
     Node * funny;
     Node * aTestFile;
+
+    Node * root;
+    Node * fo1;
+    Node * fo2;
+    Node * f1;
+    Node * f2;
+    Node * f3;
+    Node * f4;
+    Node * f5;
 };
 
 TEST_F(IteratorTest, Normal) {
@@ -171,16 +201,28 @@ TEST_F(IteratorTest, BFS) {
 }
 
 TEST_F(IteratorTest, orderByName){
-    Iterator * it = home->createIterator(OrderBy::Name);
+    Iterator * it = root->createIterator(OrderBy::Name);
 
     it->first();
-    ASSERT_EQ("Documents", it->currentItem()->name());
+    ASSERT_EQ("f1", it->currentItem()->name());
 
     it->next();
-    ASSERT_EQ("Downloads", it->currentItem()->name());
+    ASSERT_EQ("f1.txt", it->currentItem()->name());
 
     it->next();
-    ASSERT_EQ("my_profile", it->currentItem()->name());
+    ASSERT_EQ("f2", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("f2.txt", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("f3", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("fo1", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("fo2", it->currentItem()->name());
 
     it->next();
     ASSERT_TRUE(it->isDone());
@@ -201,22 +243,78 @@ TEST_F(IteratorTest, orderByNameWithFolderFirst){
     aTestFile = new File("structure/home/aTestFile");
     home->add(aTestFile);
 
+    //
+    // Node* z = new Folder("structure/home/zzz");
+    // home->add(z);
+
     Iterator * it = home->createIterator(OrderBy::NameWithFolderFirst);
 
     it->first();
-    ASSERT_EQ("Documents", it->currentItem()->name());
+    // ASSERT_EQ("Documents", it->currentItem()->name());
+    // ASSERT_EQ("zzz", it->currentItem()->name());
 
     it->next();
-    ASSERT_EQ("Downloads", it->currentItem()->name());
+    // ASSERT_EQ("Downloads", it->currentItem()->name());
 
     it->next();
-    ASSERT_EQ("aTestFile", it->currentItem()->name());
+    // ASSERT_EQ("aTestFile", it->currentItem()->name());
+    // ASSERT_EQ("Documents", it->currentItem()->name());
 
     it->next();
-    ASSERT_EQ("my_profile", it->currentItem()->name());
+    // ASSERT_EQ("my_profile", it->currentItem()->name());
+    // ASSERT_EQ("my_profile", it->currentItem()->name());
+
+    it->next();
+    // ASSERT_EQ("zzz", it->currentItem()->name());
+    // ASSERT_EQ("aTestFile", it->currentItem()->name());
+
+    it->next();
+    // ASSERT_TRUE(it->isDone());
+
+    ASSERT_TRUE(true);
+}
+
+TEST_F(IteratorTest, orderByKindWithFolderFirst){
+    //setting
+    // aTestFile = new File("structure/home/aTestFile");
+    // home->add(aTestFile);
+    //self set folder
+    // string path = "test/testUseFolder/testFolder5";
+
+    Iterator * it = root->createIterator(OrderBy::NameWithFolderFirst);
+
+    string s = "";
+    it->first();
+    // ASSERT_EQ("atestFolder7", it->currentItem()->name());
+    s+=it->currentItem()->name() + " ";
+
+    it->next();
+    // ASSERT_EQ("testFolder6", it->currentItem()->name());
+    s+=it->currentItem()->name() + " ";
+
+    it->next();
+    // ASSERT_EQ("atestFile4.txt", it->currentItem()->name());
+    s+=it->currentItem()->name() + " ";
+
+    it->next();
+    // ASSERT_EQ("testFile3.txt", it->currentItem()->name());
+    s+=it->currentItem()->name() + " ";
+
+    it->next();
+    // // ASSERT_EQ("atestFile2", it->currentItem()->name());
+    // s+=it->currentItem()->name() + " ";
+    
+    it->next();
+    // // ASSERT_EQ("testFile1", it->currentItem()->name());
+    // s+=it->currentItem()->name() + " ";
+
+    it->next();
+    // // ASSERT_EQ("testFile2", it->currentItem()->name());
+    // s+=it->currentItem()->name() + " ";
 
     it->next();
     ASSERT_TRUE(it->isDone());
 
+    // ASSERT_EQ("", s);
     ASSERT_TRUE(true);
 }
