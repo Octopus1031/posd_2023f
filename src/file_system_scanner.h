@@ -13,15 +13,11 @@ public:
         start = false;
     }
     bool isFile(){
-        if( !this->isDone() )
-            return entry->d_type != DT_DIR;
-        else return false;
+        return entry->d_type != DT_DIR;
     }
 
     bool isFolder(){
-        if( !this->isDone() )
-            return entry->d_type == DT_DIR;
-        else return false;
+        return entry->d_type == DT_DIR;
     }
 
     bool isDone(){
