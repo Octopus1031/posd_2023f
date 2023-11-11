@@ -63,7 +63,6 @@ protected:
         delete ca;
         delete cqrs;
         delete funny;
-        delete aTestFile;
 
         delete fo1;
         delete fo2;
@@ -84,7 +83,6 @@ protected:
     Node * ca;
     Node * cqrs;
     Node * funny;
-    Node * aTestFile;
 
     Node * root;
     Node * fo1;
