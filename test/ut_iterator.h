@@ -239,39 +239,31 @@ TEST_F(IteratorTest, orderByNameChanged){
 }
 
 TEST_F(IteratorTest, orderByNameWithFolderFirst){
-    //setting
-    aTestFile = new File("structure/home/aTestFile");
-    home->add(aTestFile);
-
-    //
-    // Node* z = new Folder("structure/home/zzz");
-    // home->add(z);
-
-    Iterator * it = home->createIterator(OrderBy::NameWithFolderFirst);
+    Iterator * it = root->createIterator(OrderBy::NameWithFolderFirst);
 
     it->first();
-    // ASSERT_EQ("Documents", it->currentItem()->name());
-    // ASSERT_EQ("zzz", it->currentItem()->name());
+    ASSERT_EQ("fo1", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("fo2", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("f1", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("f1.txt", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("f2", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("Downloads", it->currentItem()->name());
+    ASSERT_EQ("f2.txt", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("aTestFile", it->currentItem()->name());
-    // ASSERT_EQ("Documents", it->currentItem()->name());
+    ASSERT_EQ("f3", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("my_profile", it->currentItem()->name());
-    // ASSERT_EQ("my_profile", it->currentItem()->name());
-
-    it->next();
-    // ASSERT_EQ("zzz", it->currentItem()->name());
-    // ASSERT_EQ("aTestFile", it->currentItem()->name());
-
-    it->next();
-    // ASSERT_TRUE(it->isDone());
-
-    ASSERT_TRUE(true);
+    ASSERT_TRUE(it->isDone());
 }
 
 TEST_F(IteratorTest, orderByKindWithFolderFirst){

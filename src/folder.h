@@ -262,14 +262,20 @@ public:
             _sortedNodes.sort(cmp);
         }
         static bool cmp(Node * n1, Node * n2){
-            if( typeid(n1) == typeid(n2))
-                return n1->name() > n2->name();
-            else{
-                if( typeid(n1)==typeid(Folder*) )
-                    return false;
-                else
+            Folder* f1 = dynamic_cast<Folder*>(n1);
+            Folder* f2 = dynamic_cast<Folder*>(n2);
+            if((f1!=0) ^ (f2!=0)){ // 種類不同
+                if(f1){
                     return true;
+                }
+                else{
+                    return false;
+                }
             }
+            else{
+                return n1->name() < n2->name();
+            }
+
         }
     };
 
