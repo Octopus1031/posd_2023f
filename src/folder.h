@@ -324,30 +324,44 @@ public:
             _sortedNodes.sort(cmp);
         }
         static bool cmp(Node * n1, Node * n2){
-            if( typeid(n1) == typeid(n2)){
-                // if( typeid(n1)==typeid(Folder*) ){ //both folder
+            // Folder* f1 = dynamic_cast<Folder*>(n1);
+            // Folder* f2 = dynamic_cast<Folder*>(n2);
+            // if((f1!=0) ^ (f2!=0)){ // 種類不同
+            //     if(f1){
+            //         return true;
+            //     }
+            //     else{
+            //         return false;
+            //     }
+            // }
+            // else{
+            //     return n1->name() < n2->name();
+            // }
+
+            Folder* f1 = dynamic_cast<Folder*>(n1);
+            Folder* f2 = dynamic_cast<Folder*>(n2);
+            if((f1!=0) && (f2!=0)){ // both folder
                     return n1->name() < n2->name();
-                // }
-                // else{ //both file
-                //     bool b1 = n1->name().find(".")!=string::npos && n2->name().find(".")!=string::npos;
-                //     bool b2 = n1->name().find(".")==string::npos && n2->name().find(".")==string::npos;
-                //     //both have filename extension
-                //     if( b1 || b2 ){
-                //         return n1->name() < n2->name();
-                //     }
-                //     //only one have filename extension
-                //     else{
-                //         if( n1->name().find(".")!=string::npos ){
-                //             return true;
-                //         }
-                //         else{
-                //             return false;
-                //         }
-                //     }
-                // }
             }
-            else{
-                if( typeid(n1)==typeid(Folder*) )
+            else if((f1==0) && (f2==0)){ //both file
+                bool b1 = n1->name().find(".")!=string::npos && n2->name().find(".")!=string::npos;
+                bool b2 = n1->name().find(".")==string::npos && n2->name().find(".")==string::npos;
+                //both have filename extension
+                if( b1 || b2 ){
+                    return n1->name() < n2->name();
+                }
+                //only one have filename extension
+                else{
+                    if( n1->name().find(".")!=string::npos ){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else{ // type different
+                if( f1!=0 )
                     return true;
                 else
                     return false;

@@ -267,46 +267,29 @@ TEST_F(IteratorTest, orderByNameWithFolderFirst){
 }
 
 TEST_F(IteratorTest, orderByKindWithFolderFirst){
-    //setting
-    // aTestFile = new File("structure/home/aTestFile");
-    // home->add(aTestFile);
-    //self set folder
-    // string path = "test/testUseFolder/testFolder5";
+    Iterator * it = root->createIterator(OrderBy::Kind);
 
-    Iterator * it = root->createIterator(OrderBy::NameWithFolderFirst);
-
-    string s = "";
     it->first();
-    // ASSERT_EQ("atestFolder7", it->currentItem()->name());
-    s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("fo1", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("testFolder6", it->currentItem()->name());
-    s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("fo2", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("atestFile4.txt", it->currentItem()->name());
-    s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("f1.txt", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("testFile3.txt", it->currentItem()->name());
-    s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("f2.txt", it->currentItem()->name());
 
     it->next();
-    // // ASSERT_EQ("atestFile2", it->currentItem()->name());
-    // s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("f1", it->currentItem()->name());
     
     it->next();
-    // // ASSERT_EQ("testFile1", it->currentItem()->name());
-    // s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("f2", it->currentItem()->name());
 
     it->next();
-    // // ASSERT_EQ("testFile2", it->currentItem()->name());
-    // s+=it->currentItem()->name() + " ";
+    ASSERT_EQ("f3", it->currentItem()->name());
 
     it->next();
     ASSERT_TRUE(it->isDone());
-
-    // ASSERT_EQ("", s);
-    ASSERT_TRUE(true);
 }
