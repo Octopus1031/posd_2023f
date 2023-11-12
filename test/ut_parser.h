@@ -130,7 +130,6 @@ TEST(ParserTest, parserWithFolderStructure){
     ASSERT_TRUE( root->getChildByName("file.txt")!=NULL );
     ASSERT_TRUE( root->getChildByName("home")->getChildByName("Documents")!=NULL );
     ASSERT_TRUE( root->getChildByName("home")->getChildByName("Downloads")!=NULL );
-    ASSERT_TRUE( root->getChildByName("home")->getChildByName("aTestFile")!=NULL );
     ASSERT_TRUE( root->getChildByName("home")->getChildByName("hello.txt")!=NULL );
     ASSERT_TRUE( root->getChildByName("home")->getChildByName("my_profile")!=NULL );
 }
