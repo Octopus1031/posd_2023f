@@ -268,6 +268,15 @@ TEST_F(IteratorTest, orderByKindWithFolderFirst){
     Iterator * it = root->createIterator(OrderBy::Kind);
 
     it->first();
+    ASSERT_EQ("f1", it->currentItem()->name());
+    
+    it->next();
+    ASSERT_EQ("f2", it->currentItem()->name());
+
+    it->next();
+    ASSERT_EQ("f3", it->currentItem()->name());
+
+    it->next();
     ASSERT_EQ("fo1", it->currentItem()->name());
 
     it->next();
@@ -278,15 +287,6 @@ TEST_F(IteratorTest, orderByKindWithFolderFirst){
 
     it->next();
     ASSERT_EQ("f2.txt", it->currentItem()->name());
-
-    it->next();
-    ASSERT_EQ("f1", it->currentItem()->name());
-    
-    it->next();
-    ASSERT_EQ("f2", it->currentItem()->name());
-
-    it->next();
-    ASSERT_EQ("f3", it->currentItem()->name());
 
     it->next();
     ASSERT_TRUE(it->isDone());

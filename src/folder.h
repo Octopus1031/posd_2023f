@@ -340,20 +340,6 @@ public:
             _sortedNodes.sort(cmp);
         }
         static bool cmp(Node * n1, Node * n2){
-            // Folder* f1 = dynamic_cast<Folder*>(n1);
-            // Folder* f2 = dynamic_cast<Folder*>(n2);
-            // if((f1!=0) ^ (f2!=0)){ // 種類不同
-            //     if(f1){
-            //         return true;
-            //     }
-            //     else{
-            //         return false;
-            //     }
-            // }
-            // else{
-            //     return n1->name() < n2->name();
-            // }
-
             Folder* f1 = dynamic_cast<Folder*>(n1);
             Folder* f2 = dynamic_cast<Folder*>(n2);
             if((f1!=0) && (f2!=0)){ // both folder
@@ -368,7 +354,7 @@ public:
                 }
                 //only one have filename extension
                 else{
-                    if( n1->name().find(".")!=string::npos ){
+                    if( n1->name().find(".")==string::npos ){
                         return true;
                     }
                     else{
@@ -377,10 +363,20 @@ public:
                 }
             }
             else{ // type different
-                if( f1!=0 )
-                    return true;
-                else
-                    return false;
+                if( f1!=0 ){ // n1 is folder, n2 is file
+                    bool b = n2->name().find(".")!=string::npos;
+                    if(b)
+                        return true;
+                    else
+                        return false;
+                }
+                else{ // n1 is file, n2 is folder
+                    bool b = n1->name().find(".")==string::npos;
+                    if(b)
+                        return true;
+                    else
+                        return false;
+                }
             }
         }
     };
