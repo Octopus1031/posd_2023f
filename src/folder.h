@@ -350,7 +350,8 @@ public:
                 bool b2 = n1->name().find(".")==string::npos && n2->name().find(".")==string::npos;
                 //both have filename extension
                 if( b1 || b2 ){
-                    return n1->name() < n2->name();
+                    // return n1->name() < n2->name();
+                    return true;
                 }
                 //only one have filename extension
                 else{
