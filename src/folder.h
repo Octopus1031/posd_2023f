@@ -346,12 +346,20 @@ public:
                     return n1->name() < n2->name();
             }
             else if((f1==0) && (f2==0)){ //both file
-                bool b1 = n1->name().find(".")!=string::npos && n2->name().find(".")!=string::npos;
-                bool b2 = n1->name().find(".")==string::npos && n2->name().find(".")==string::npos;
+                File* fi1 = dynamic_cast<File*>(n1);
+                File* fi2 = dynamic_cast<File*>(n2);
+                bool b1 = fi1->name().find(".")!=string::npos && fi2->name().find(".")!=string::npos;
+                bool b2 = fi1->name().find(".")==string::npos && fi2->name().find(".")==string::npos;
                 //both have filename extension
                 if( b1 || b2 ){
                     // return n1->name() < n2->name();
-                    return true;
+                    // return true;
+                    if( !fi1->kind().compare(fi2->kind()) ){ // kind eq
+                        return fi1->name() < fi2->name();
+                    }
+                    else{
+                        return fi1->kind() < fi2->kind();
+                    }
                 }
                 //only one have filename extension
                 else{

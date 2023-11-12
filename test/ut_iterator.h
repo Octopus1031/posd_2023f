@@ -268,15 +268,15 @@ TEST_F(IteratorTest, orderByKindWithFolderFirst){
     Iterator * it = root->createIterator(OrderBy::Kind);
 
     it->first();
-    // ASSERT_EQ("f1", it->currentItem()->name());
-    ASSERT_EQ("f3", it->currentItem()->name());
+    ASSERT_EQ("f1", it->currentItem()->name());
+    // ASSERT_EQ("f3", it->currentItem()->name());
     
     it->next();
     ASSERT_EQ("f2", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("f3", it->currentItem()->name());
-    ASSERT_EQ("f1", it->currentItem()->name());
+    ASSERT_EQ("f3", it->currentItem()->name());
+    // ASSERT_EQ("f1", it->currentItem()->name());
 
     it->next();
     ASSERT_EQ("fo1", it->currentItem()->name());
@@ -285,12 +285,12 @@ TEST_F(IteratorTest, orderByKindWithFolderFirst){
     ASSERT_EQ("fo2", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("f1.txt", it->currentItem()->name());
-    ASSERT_EQ("f2.txt", it->currentItem()->name());
+    ASSERT_EQ("f1.txt", it->currentItem()->name());
+    // ASSERT_EQ("f2.txt", it->currentItem()->name());
 
     it->next();
-    // ASSERT_EQ("f2.txt", it->currentItem()->name());
-    ASSERT_EQ("f1.txt", it->currentItem()->name());
+    ASSERT_EQ("f2.txt", it->currentItem()->name());
+    // ASSERT_EQ("f1.txt", it->currentItem()->name());
 
     it->next();
     ASSERT_TRUE(it->isDone());

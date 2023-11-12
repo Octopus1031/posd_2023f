@@ -290,16 +290,17 @@ TEST_F(VisitorTest, treeVisitorNestedFolderByKindWithFolderfirst) {
 
     string expected;
     expected+=".\n";
-    // expected+="├── nested\n";
-    // expected+="│   ├── file3.txt\n";
-    // expected+="│   └── file4.txt\n";
-    // expected+="├── file1.txt\n";
-    // expected+="└── file2.txt\n";
     expected+="├── nested\n";
-    expected+="│   ├── file4.txt\n";
-    expected+="│   └── file3.txt\n";
-    expected+="├── file2.txt\n";
-    expected+="└── file1.txt\n";
+    expected+="│   ├── file3.txt\n";
+    expected+="│   └── file4.txt\n";
+    expected+="├── file1.txt\n";
+    expected+="└── file2.txt\n";
+
+    // expected+="├── nested\n";
+    // expected+="│   ├── file4.txt\n";
+    // expected+="│   └── file3.txt\n";
+    // expected+="├── file2.txt\n";
+    // expected+="└── file1.txt\n";
 
     ASSERT_EQ(expected, visitor->getTree());
 }
@@ -354,30 +355,31 @@ TEST_F(VisitorTest, treeVisitorTestFolderByKind) {
 
     string expected;
     expected+=".\n";
-    // expected+="├── f1\n";
-    // expected+="├── f2\n";
-    // expected+="├── f3\n";
-    // expected+="├── fo1\n";
-    // expected+="│   ├── f11\n";
-    // expected+="│   └── fo11\n";
-    // expected+="│       ├── f111\n";
-    // expected+="│       └── f112\n";
-    // expected+="├── fo2\n";
-    // expected+="│   └── f21\n";
-    // expected+="├── f1.txt\n";
-    // expected+="└── f2.txt\n";
-    expected+="├── f3\n";
-    expected+="├── f2\n";
     expected+="├── f1\n";
+    expected+="├── f2\n";
+    expected+="├── f3\n";
     expected+="├── fo1\n";
     expected+="│   ├── f11\n";
     expected+="│   └── fo11\n";
-    expected+="│       ├── f112\n";
-    expected+="│       └── f111\n";
+    expected+="│       ├── f111\n";
+    expected+="│       └── f112\n";
     expected+="├── fo2\n";
     expected+="│   └── f21\n";
-    expected+="├── f2.txt\n";
-    expected+="└── f1.txt\n";
+    expected+="├── f1.txt\n";
+    expected+="└── f2.txt\n";
+    
+    // expected+="├── f3\n";
+    // expected+="├── f2\n";
+    // expected+="├── f1\n";
+    // expected+="├── fo1\n";
+    // expected+="│   ├── f11\n";
+    // expected+="│   └── fo11\n";
+    // expected+="│       ├── f112\n";
+    // expected+="│       └── f111\n";
+    // expected+="├── fo2\n";
+    // expected+="│   └── f21\n";
+    // expected+="├── f2.txt\n";
+    // expected+="└── f1.txt\n";
 
     ASSERT_EQ(expected, visitor->getTree());
 }

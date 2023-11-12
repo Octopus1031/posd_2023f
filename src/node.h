@@ -67,4 +67,9 @@ public:
     }
 
     virtual void accept(Visitor * visitor) = 0;
+
+    string kind() const {
+        size_t slash = _path.rfind(".");
+        return _path.substr(slash+1);
+    }
 };
