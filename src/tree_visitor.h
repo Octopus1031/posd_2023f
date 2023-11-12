@@ -50,7 +50,6 @@ public:
     }
 
     string getTree(){
-        cout << tree << endl;
         return tree;
     }
 
