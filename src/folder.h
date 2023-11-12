@@ -139,6 +139,10 @@ public:
             return _current == _host->_nodes.end();
         }
 
+        bool lastOne() const{
+            return *_current == _host->_nodes.back();
+        }
+
     private:
         Folder* const _host;
         std::list<Node *>::iterator _current;
@@ -194,6 +198,10 @@ public:
             return _current == _sortedNodes.end();
         }
 
+        bool lastOne() const{
+            return *_current == _sortedNodes.back();
+        }
+
     private:
         Folder* const _host;
         std::list<Node *>::iterator _current;
@@ -241,6 +249,10 @@ public:
 
         bool isDone() const {
             return _current == _sortedNodes.end();
+        }
+
+        bool lastOne() const{
+            return *_current == _sortedNodes.back();
         }
 
     private:
@@ -303,6 +315,10 @@ public:
 
         bool isDone() const {
             return _current == _sortedNodes.end();
+        }
+
+        bool lastOne() const{
+            return *_current == _sortedNodes.back();
         }
 
     private:

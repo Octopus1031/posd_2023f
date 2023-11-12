@@ -16,4 +16,7 @@ public:
     virtual bool isDone() const {
         return true;
     }
+    virtual bool lastOne() const {
+        return true;
+    }
 };

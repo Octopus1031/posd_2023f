@@ -20,7 +20,7 @@ public:
     }
 
     void buildFolder(string path){
-        Folder * folder = new Folder(path);
+        // Folder * folder = new Folder(path);
     }
 
     void endFolder(Folder *folder){

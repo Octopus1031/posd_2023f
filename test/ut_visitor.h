@@ -4,6 +4,7 @@
 #include "../src/visitor.h"
 #include "../src/find_by_name_visitor.h"
 #include "../src/stream_out_visitor.h"
+#include "../src/tree_visitor.h"
 
 class VisitorTest: public ::testing::Test {
 protected:
@@ -51,6 +52,39 @@ protected:
         nested->add(file3);
         file4 = new File("structure/visitor/nested/file4.txt");
         nested->add(file4);
+
+        //add
+        f1 = new File("test/testUseFolder/testFolder5/f1");
+        f2 = new File("test/testUseFolder/testFolder5/f2");
+        f3 = new File("test/testUseFolder/testFolder5/f3");
+        f4 = new File("test/testUseFolder/testFolder5/f1.txt");
+        f5 = new File("test/testUseFolder/testFolder5/f2.txt");
+
+        fo1 = new Folder("test/testUseFolder/testFolder5/fo1");
+        f11 = new File("test/testUseFolder/testFolder5/fo1/f11");
+        fo11 = new Folder("test/testUseFolder/testFolder5/fo1/fo11");
+        f111 = new File("test/testUseFolder/testFolder5/fo1/fo11/f111");
+        f112 = new File("test/testUseFolder/testFolder5/fo1/fo11/f112");
+
+        fo2 = new Folder("test/testUseFolder/testFolder5/fo2");
+        f21 = new File("test/testUseFolder/testFolder5/fo2/f21");
+
+
+        root = new Folder("test/testUseFolder/testFolder5");
+        fo11->add(f111);
+        fo11->add(f112);
+        fo1->add(f11);
+        fo1->add(fo11);
+
+        fo2->add(f21);
+
+        root->add(fo1);
+        root->add(fo2);
+        root->add(f1);
+        root->add(f2);
+        root->add(f3);
+        root->add(f4);
+        root->add(f5);
     }
 
     void TearDown() {
@@ -72,6 +106,19 @@ protected:
         delete nested;
         delete file3;
         delete file4;
+
+        delete fo1;
+        delete fo2;
+        delete f1;
+        delete f2;
+        delete f3;
+        delete f4;
+        delete f5;
+        delete f11;
+        delete f21;
+        delete fo11;
+        delete f111;
+        delete f112;
     }
     
     Node * home;
@@ -93,6 +140,20 @@ protected:
     Node * nested;
     Node * file3;
     Node * file4;
+
+    Node * root;
+    Node * fo1;
+    Node * fo2;
+    Node * f1;
+    Node * f2;
+    Node * f3;
+    Node * f4;
+    Node * f5;
+    Node * f11;
+    Node * f21;
+    Node * fo11;
+    Node * f111;
+    Node * f112;
 };
 
 TEST_F(VisitorTest, findNormal) {
@@ -190,4 +251,116 @@ TEST_F(VisitorTest, streamOutNestedFolder) {
     expected += "\n";
 
     ASSERT_EQ(expected, visitor->getResult());
+}
+
+TEST_F(VisitorTest, treeVisitorNestedFolderByName) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::Name);
+    visitor_folder->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── file1.txt\n";
+    expected+="├── file2.txt\n";
+    expected+="└── nested\n";
+    expected+="    ├── file3.txt\n";
+    expected+="    └── file4.txt\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
+
+} // ├:a ─:b │:c └:d
+
+TEST_F(VisitorTest, treeVisitorNestedFolderByNameWithFolderFirst) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::NameWithFolderFirst);
+    visitor_folder->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── nested\n";
+    expected+="│   ├── file3.txt\n";
+    expected+="│   └── file4.txt\n";
+    expected+="├── file1.txt\n";
+    expected+="└── file2.txt\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
+}
+
+TEST_F(VisitorTest, treeVisitorNestedFolderByKindWithFolderfirst) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::Kind);
+    visitor_folder->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── nested\n";
+    expected+="│   ├── file3.txt\n";
+    expected+="│   └── file4.txt\n";
+    expected+="├── file1.txt\n";
+    expected+="└── file2.txt\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
+}
+
+TEST_F(VisitorTest, treeVisitorTestFolderByName) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::Name);
+    root->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── f1\n";
+    expected+="├── f1.txt\n";
+    expected+="├── f2\n";
+    expected+="├── f2.txt\n";
+    expected+="├── f3\n";
+    expected+="├── fo1\n";
+    expected+="│   ├── f11\n";
+    expected+="│   └── fo11\n";
+    expected+="│       ├── f111\n";
+    expected+="│       └── f112\n";
+    expected+="└── fo2\n";
+    expected+="    └── f21\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
+}
+
+TEST_F(VisitorTest, treeVisitorTestFolderByNameWithFolderFirst) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::NameWithFolderFirst);
+    root->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── fo1\n";
+    expected+="│   ├── fo11\n";
+    expected+="│   │   ├── f111\n";
+    expected+="│   │   └── f112\n";
+    expected+="│   └── f11\n";
+    expected+="├── fo2\n";
+    expected+="│   └── f21\n";
+    expected+="├── f1\n";
+    expected+="├── f1.txt\n";
+    expected+="├── f2\n";
+    expected+="├── f2.txt\n";
+    expected+="└── f3\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
+}
+
+TEST_F(VisitorTest, treeVisitorTestFolderByKind) {
+    TreeVisitor * visitor = new TreeVisitor(OrderBy::Kind);
+    root->accept(visitor);
+
+    string expected;
+    expected+=".\n";
+    expected+="├── fo1\n";
+    expected+="│   ├── fo11\n";
+    expected+="│   │   ├── f111\n";
+    expected+="│   │   └── f112\n";
+    expected+="│   └── f11\n";
+    expected+="├── fo2\n";
+    expected+="│   └── f21\n";
+    expected+="├── f1.txt\n";
+    expected+="├── f2.txt\n";
+    expected+="├── f1\n";
+    expected+="├── f2\n";
+    expected+="└── f3\n";
+
+    ASSERT_EQ(expected, visitor->getTree());
 }
