@@ -6,7 +6,9 @@
 
 class Value {
 public:
-    virtual std::string toString() {}
-    virtual JsonIterator * createIterator(){}
-    virtual void accept(JsonVisitor * visitor){}
+    virtual std::string toString() = 0;
+    virtual JsonIterator * createIterator(){
+        return new NullIterator();
+    }
+    virtual void accept(JsonVisitor * visitor) = 0;
 };

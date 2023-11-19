@@ -4,13 +4,17 @@
 #include "../src/beautify_visitor.h"
 
 #include <string>
+#include <iostream>
 
 TEST(JSonSuite, OneKeyStringValue) {
     JsonObject *jo = new JsonObject;
     Value * v1 = new StringValue("value1");
     jo->set("key1", v1);
     ASSERT_EQ(v1, jo->getValue("key1"));
-    ASSERT_EQ("{\n\"key1\":\"value1\"\n}", jo->toString());
+    std::string expect ="{\n"\
+                            "\"key1\":\"value1\"\n"\
+                        "}";
+    ASSERT_EQ(expect, jo->toString());
 
 }
 
@@ -20,9 +24,13 @@ TEST(JSonSuite, TwoKeyStringValue) {
     jo->set("key1", v1);
     Value * v2 = new StringValue("value2");
     jo->set("key2", v2);
+    std::string expect ="{\n"\
+                            "\"key1\":\"value1\",\n"\
+                            "\"key2\":\"value2\"\n"\
+                        "}";
     ASSERT_EQ("\"value1\"", jo->getValue("key1")->toString());
     ASSERT_EQ("\"value2\"", jo->getValue("key2")->toString());
-    ASSERT_EQ("{\n\"key1\":\"value1\",\n\"key2\":\"value2\"\n}", jo->toString());
+    ASSERT_EQ(expect, jo->toString());
 
 }
 
@@ -36,7 +44,13 @@ TEST(JSonSuite, Composite) {
     JsonObject *j_composite = new JsonObject;
     j_composite->set("keyc", jo);
     ASSERT_EQ(jo, j_composite->getValue("keyc"));
-    ASSERT_EQ("{\n\"keyc\":{\n\"key1\":\"value1\",\n\"key2\":\"value2\"\n}\n}", j_composite->toString());
+    std::string expect ="{\n"\
+                            "\"keyc\":{\n"\
+                                "\"key1\":\"value1\",\n"\
+                                "\"key2\":\"value2\"\n"\
+                            "}\n"\
+                        "}";
+    ASSERT_EQ(expect, j_composite->toString());
 }
 
 TEST(JSonSuite, nullIterator){
@@ -85,20 +99,59 @@ TEST(JSonSuite, beautifyVisitorStringValue){
     ASSERT_EQ(s, visitor->getResult());
 }
 
-// TEST(JSonSuite, beautifyVisitorJsonObject){
-//     JsonObject *jo = new JsonObject;
-//     Value * v1 = new StringValue("value1");
-//     jo->set("key1", v1);
-//     Value * v2 = new StringValue("value2");
-//     jo->set("key2", v2);
+TEST(JSonSuite, beautifyVisitorJsonObject){
+    JsonObject *jo = new JsonObject;
+    Value * v1 = new StringValue("value1");
+    jo->set("key1", v1);
+    Value * v2 = new StringValue("value2");
+    jo->set("key2", v2);
+    JsonObject *j_composite = new JsonObject;
+    j_composite->set("keyc", jo);
+
+    BeautifyVisitor * visitor = new BeautifyVisitor();
+    j_composite->accept(visitor);
+    
+    std::string s = "{\n    \"keyc\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n    }\n}";
+    ASSERT_EQ(s, visitor->getResult());
+}
+
+// TEST(JSonSuite, beautifyVisitorJsonObjectEx2){
+//     JsonObject *jo1 = new JsonObject;
+//     Value * v1 = new StringValue("Robert C. Martin");
+//     jo1->set("author", v1);
+//     Value * v2 = new StringValue("Clean Code");
+//     jo1->set("name", v2);
+
+//     JsonObject *jo2 = new JsonObject;
+//     Value * v1 = new StringValue("Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides");
+//     jo2->set("author", v1);
+//     Value * v2 = new StringValue("Design Patterns Elements of Reusable Object-Oriented Software");
+//     jo2->set("name", v2);
+
+//     JsonObject *jo3 = new JsonObject;
+//     jo3->set("clean code", jo1);
+//     jo3->set("design pattern", jo2);
+
 //     JsonObject *j_composite = new JsonObject;
-//     j_composite->set("keyc", jo);
+//     j_composite->set("books", jo3);
 
 //     BeautifyVisitor * visitor = new BeautifyVisitor();
 //     j_composite->accept(visitor);
     
+
 //     std::string s = "{\n    \"keyc\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n    }\n}";
 //     ASSERT_EQ(s, visitor->getResult());
 // }
 
-// {\n    \"keyc\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n    }\n}
+// "{\n
+//     "books": {\n
+//         "clean code": {\n
+//             "author": "Robert C. Martin",\n
+//             "name": "Clean Code"\n
+//         },\n
+//         "design pattern": {\n
+//             "author": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",\n
+//             "name": "Design Patterns Elements of Reusable Object-Oriented Software"\n
+//         }\n
+//     }\n
+// }"

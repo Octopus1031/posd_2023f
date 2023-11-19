@@ -1,6 +1,7 @@
 #pragma once
 
 #include "value.h"
+#include "string_value.h"
 #include "json_iterator.h"
 #include "visitor.h"
 
@@ -10,14 +11,12 @@ private:
     std::map<std::string, Value *> sets;
 
 public:
-    std::string toString() {
+    std::string toString() override {
         std::string s = "{\n";
-        // s+= "\"" + sets.begin()->first + "\":";
-        // s+= sets.begin()->second->toString();
         unsigned n=0;
-        for(const auto& [key, value] : sets){
-            s+= "\"" + key + "\":";
-            s+= value->toString();
+        for(const auto &jsonPair : sets){
+            s+= "\"" + jsonPair.first + "\":";
+            s+= jsonPair.second->toString();
             if( n!=sets.size()-1 ){
                 s+=",\n";
             }
@@ -36,11 +35,11 @@ public:
         return sets.find(k)->second;
     }
 
-    JsonIterator * createIterator(){
+    JsonIterator * createIterator() override {
         return new JsonObjectIterator(this);
     }
 
-    void accept(JsonVisitor * visitor){
+    void accept(JsonVisitor * visitor) override {
         visitor->visitJsonObject(this);
     }
 
@@ -57,7 +56,7 @@ public:
             return it->first;
         }
 
-        Value * currentValue(){
+        Value* currentValue(){
             return it->second;
         }
 
@@ -67,6 +66,12 @@ public:
 
         bool isDone(){
             return it==_jo->sets.end();
+        }
+
+        bool lastOne(){
+            auto _it = _jo->sets.end();
+            _it--;
+            return it==_it;
         }
 
     private:

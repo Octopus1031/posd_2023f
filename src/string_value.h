@@ -6,10 +6,7 @@
 
 class StringValue : public Value {
 public:
-    // StringValue(string key) : _key(key) {}
-    StringValue(std::string k){
-        _key = k;
-    }
+    StringValue(std::string key) : _key(key) {}
 
     std::string toString() {
         return "\"" + _key + "\"";
