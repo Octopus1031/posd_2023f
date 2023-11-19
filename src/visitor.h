@@ -1,10 +1,13 @@
 #pragma once
 
-class File;
-class Folder;
+// #include "value.h"
+// #include "json_object.h"
+// #include "string_value.h"
+class JsonObject;
+class StringValue;
 
-class Visitor {
+class JsonVisitor {
 public:
-    virtual void visitFile(File * file) = 0;
-    virtual void visitFolder(Folder * folder) = 0;
+    virtual void visitJsonObject(JsonObject * obj) = 0;
+    virtual void visitStringValue(StringValue * val) = 0;
 };
