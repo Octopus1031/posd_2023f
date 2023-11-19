@@ -115,43 +115,32 @@ TEST(JSonSuite, beautifyVisitorJsonObject){
     ASSERT_EQ(s, visitor->getResult());
 }
 
-// TEST(JSonSuite, beautifyVisitorJsonObjectEx2){
-//     JsonObject *jo1 = new JsonObject;
-//     Value * v1 = new StringValue("Robert C. Martin");
-//     jo1->set("author", v1);
-//     Value * v2 = new StringValue("Clean Code");
-//     jo1->set("name", v2);
+TEST(JSonSuite, beautifyVisitorJsonObjectEx2){
+    JsonObject *jo1 = new JsonObject;
+    Value * v1 = new StringValue("Robert C. Martin");
+    jo1->set("author", v1);
+    Value * v2 = new StringValue("Clean Code");
+    jo1->set("name", v2);
 
-//     JsonObject *jo2 = new JsonObject;
-//     Value * v1 = new StringValue("Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides");
-//     jo2->set("author", v1);
-//     Value * v2 = new StringValue("Design Patterns Elements of Reusable Object-Oriented Software");
-//     jo2->set("name", v2);
+    JsonObject *jo2 = new JsonObject;
+    Value * v3 = new StringValue("Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides");
+    jo2->set("author", v3);
+    Value * v4 = new StringValue("Design Patterns Elements of Reusable Object-Oriented Software");
+    jo2->set("name", v4);
 
-//     JsonObject *jo3 = new JsonObject;
-//     jo3->set("clean code", jo1);
-//     jo3->set("design pattern", jo2);
+    JsonObject *jo3 = new JsonObject;
+    jo3->set("clean code", jo1);
+    jo3->set("design pattern", jo2);
 
-//     JsonObject *j_composite = new JsonObject;
-//     j_composite->set("books", jo3);
+    JsonObject *j_composite = new JsonObject;
+    j_composite->set("books", jo3);
 
-//     BeautifyVisitor * visitor = new BeautifyVisitor();
-//     j_composite->accept(visitor);
+    BeautifyVisitor * visitor = new BeautifyVisitor();
+    j_composite->accept(visitor);
     
+    // std::cout << visitor->getResult() << std::endl;
+    std::string s = "{\n    \"books\": {\n        \"clean code\": {\n            \"author\": \"Robert C. Martin\",\n            \"name\": \"Clean Code\"\n        },\n        \"design pattern\": {\n            \"author\": \"Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides\",\n            \"name\": \"Design Patterns Elements of Reusable Object-Oriented Software\"\n        }\n    }\n}";
+    ASSERT_EQ(s, visitor->getResult());
+}
 
-//     std::string s = "{\n    \"keyc\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n    }\n}";
-//     ASSERT_EQ(s, visitor->getResult());
-// }
 
-// "{\n
-//     "books": {\n
-//         "clean code": {\n
-//             "author": "Robert C. Martin",\n
-//             "name": "Clean Code"\n
-//         },\n
-//         "design pattern": {\n
-//             "author": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",\n
-//             "name": "Design Patterns Elements of Reusable Object-Oriented Software"\n
-//         }\n
-//     }\n
-// }"
