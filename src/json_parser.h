@@ -16,9 +16,13 @@ public:
             char token = _scanner->next();
             if(token == ' ') {
                 continue;
-            } else if (token == '{') {
+            }
+            else if (token == '{') {
                 // fill in the code
-            } else if (token == '"') {
+                _builder->buildObject(key);
+                token = _scanner->next();
+            }
+            else if (token == '"') {
                 std::string value;
                 token = _scanner->next();
                 while(token != '"') {
@@ -33,21 +37,28 @@ public:
                 
                 if(token == ':') {
                     key = value;
+                    _builder->buildObject(key);
+                    token = _scanner->next();
                 }
                 else if(token == ',') {
                     // fill in the code
-                } else if (token == '}') {
+                    _builder->buildValue(key, value);
+                    token = _scanner->next();
+                }
+                else if (token == '}') {
                     // fill in the code
                 }
             }
             else if (token == '}') {
-                    // fill in the code
+                // fill in the code
+                _builder->endObject();
             }
         }
     }
 
     JsonObject * getJsonObject() {
-        return nullptr;    // fill in the code
+        // return nullptr;    // fill in the code
+        return _builder->getJsonObject();
     }
 
     void setInput(std::string input) {
