@@ -29,7 +29,8 @@ public:
                 }
                 token = _scanner->next();
 
-                while (token == ' ' || token == '\n') {
+                // while (token == ' ' || token == '\n') {
+                while (token == ' ') {
                     token = _scanner->next();
                 }
                 

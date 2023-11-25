@@ -9,7 +9,7 @@
 class JsonBuilder {
 public:
     void buildValue(std::string key, std::string value){
-        std::cout << "bv key:" << key << " value:" << value << std::endl;
+        std::cout << "bv key:" << key << " ,value:" << value << std::endl;
         Value * v = new StringValue(value);
         objects.top()->set(key, v);
     }
