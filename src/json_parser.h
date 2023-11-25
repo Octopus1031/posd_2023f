@@ -29,8 +29,8 @@ public:
                 }
                 token = _scanner->next();
 
-                // while (token == ' ' || token == '\n') {
-                while (token == ' ') {
+                while (token == ' ' || token == '\n') {
+                // while (token == ' ') {
                     token = _scanner->next();
                 }
                 
@@ -43,12 +43,14 @@ public:
                 else if (token == '}') {
                     // std::cout << "~~~~~" << std::endl;
                     _builder->buildValue(key, value);
+                    std::cout << "~~~~~" << std::endl;
                     _builder->endObject();
                 }
                 // std::cout << "~temp t: " << token << "|" << std::endl;
                 // std::cout << "~temp v: " << value << std::endl;
             }
             else if (token == '}') {
+                std::cout << "=====" << std::endl;
                 _builder->endObject();
             }
 
