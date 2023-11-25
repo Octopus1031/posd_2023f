@@ -32,7 +32,10 @@ public:
     }
 
     Value* getValue(std::string k){
-        return sets.find(k)->second;
+        if(sets.find(k)!=sets.end())
+            return sets.find(k)->second;
+        else
+            throw std::string("getValue error");
     }
 
     JsonIterator * createIterator() override {

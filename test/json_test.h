@@ -56,6 +56,19 @@ TEST(JSonSuite, Composite) {
     ASSERT_EQ(expect, j_composite->toString());
 }
 
+TEST(JSonSuite, CompositeGetValueException){
+    JsonObject *jo = new JsonObject;
+    Value * v1 = new StringValue("value1");
+    jo->set("key1", v1);
+    Value * v2 = new StringValue("value2");
+    jo->set("key2", v2);
+
+    JsonObject *j_composite = new JsonObject;
+    j_composite->set("keyc", jo);
+    ASSERT_EQ(jo, j_composite->getValue("keyc"));
+    ASSERT_ANY_THROW(j_composite->getValue("keyccc"));
+}
+
 TEST(JSonSuite, nullIterator){
     Value * v1 = new StringValue("value1");
     JsonIterator * it = v1->createIterator();
