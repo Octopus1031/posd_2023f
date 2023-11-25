@@ -18,9 +18,7 @@ public:
                 continue;
             }
             else if (token == '{') {
-                // fill in the code
                 _builder->buildObject(key);
-                token = _scanner->next();
             }
             else if (token == '"') {
                 std::string value;
@@ -31,33 +29,33 @@ public:
                 }
                 token = _scanner->next();
 
-                while (token == ' ') {
+                while (token == ' ' || token == '\n') {
                     token = _scanner->next();
                 }
                 
                 if(token == ':') {
                     key = value;
-                    _builder->buildObject(key);
-                    token = _scanner->next();
                 }
                 else if(token == ',') {
-                    // fill in the code
                     _builder->buildValue(key, value);
-                    token = _scanner->next();
                 }
                 else if (token == '}') {
-                    // fill in the code
+                    // std::cout << "~~~~~" << std::endl;
+                    _builder->buildValue(key, value);
+                    _builder->endObject();
                 }
+                // std::cout << "~temp t: " << token << "|" << std::endl;
+                // std::cout << "~temp v: " << value << std::endl;
             }
             else if (token == '}') {
-                // fill in the code
                 _builder->endObject();
             }
+
+            // std::cout << "~temp k: " << key << std::endl;
         }
     }
 
     JsonObject * getJsonObject() {
-        // return nullptr;    // fill in the code
         return _builder->getJsonObject();
     }
 
