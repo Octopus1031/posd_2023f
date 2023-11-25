@@ -151,6 +151,7 @@ TEST(JSonSuite, parser){
     std::string input = "{\n    \"books\": {\n        \"clean code\": {\n            \"author\": \"Robert C. Martin\",\n            \"name\": \"Clean Code\"\n        },\n        \"design pattern\": {\n            \"author\": \"Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides\",\n            \"name\": \"Design Patterns Elements of Reusable Object-Oriented Software\"\n        }\n    }\n}";
     parser->setInput(input);
     parser->parse();
+    std::cout << "hello" << std::endl;
     JsonObject * jo = parser->getJsonObject();
     BeautifyVisitor * visitor = new BeautifyVisitor();
     jo->accept(visitor);
