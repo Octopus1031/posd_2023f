@@ -30,7 +30,6 @@ public:
                 token = _scanner->next();
 
                 while (token == ' ' || token == '\n') {
-                // while (token == ' ') {
                     token = _scanner->next();
                 }
                 
@@ -41,21 +40,14 @@ public:
                     _builder->buildValue(key, value);
                 }
                 else if (token == '}') {
-                    // std::cout << "~~~~~" << std::endl;
                     _builder->buildValue(key, value);
-                    // std::cout << "~~~~~" << std::endl;
                     _builder->endObject();
                 }
-                // std::cout << "~temp t: " << token << "|" << std::endl;
-                // std::cout << "~temp v: " << value << std::endl;
             }
             else if (token == '}') {
-                // std::cout << "=====" << std::endl;
-                int test = 1 + 1;
+                std::cout << "為什麼加這行才不會Segmentation fault？？" << std::endl;
                 _builder->endObject();
             }
-
-            // std::cout << "~temp k: " << key << std::endl;
         }
     }
 

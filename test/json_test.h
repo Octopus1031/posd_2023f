@@ -154,7 +154,6 @@ TEST(JSonSuite, beautifyVisitorJsonObjectEx2){
     BeautifyVisitor * visitor = new BeautifyVisitor();
     j_composite->accept(visitor);
     
-    // std::cout << visitor->getResult() << std::endl;
     std::string s = "{\n    \"books\": {\n        \"clean code\": {\n            \"author\": \"Robert C. Martin\",\n            \"name\": \"Clean Code\"\n        },\n        \"design pattern\": {\n            \"author\": \"Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides\",\n            \"name\": \"Design Patterns Elements of Reusable Object-Oriented Software\"\n        }\n    }\n}";
     ASSERT_EQ(s, visitor->getResult());
 }
@@ -163,11 +162,9 @@ TEST(JSonSuite, parser){
     JsonParser * parser = new JsonParser(new JsonScanner(), new JsonBuilder());
     std::string input = "{\n    \"books\": {\n        \"clean code\": {\n            \"author\": \"Robert C. Martin\",\n            \"name\": \"Clean Code\"\n        },\n        \"design pattern\": {\n            \"author\": \"Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides\",\n            \"name\": \"Design Patterns Elements of Reusable Object-Oriented Software\"\n        }\n    }\n}";
     parser->setInput(input);
-    // std::cout << "hello" << std::endl;
     parser->parse();
     JsonObject * jo = parser->getJsonObject();
     BeautifyVisitor * visitor = new BeautifyVisitor();
     jo->accept(visitor);
-    // std::cout << visitor->getResult() << std::endl;
     ASSERT_EQ(input, visitor->getResult());
 }
