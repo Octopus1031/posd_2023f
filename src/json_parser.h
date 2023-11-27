@@ -51,6 +51,7 @@ public:
             }
             else if (token == '}') {
                 // std::cout << "=====" << std::endl;
+                int test = 1 + 1;
                 _builder->endObject();
             }
 
