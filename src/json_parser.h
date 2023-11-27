@@ -45,7 +45,7 @@ public:
                 }
             }
             else if (token == '}') {
-                // std::cout << "為什麼加這行才不會Segmentation fault？？" << std::endl;
+                std::cout << "為什麼加這行才不會Segmentation fault？？" << std::endl;
                 _builder->endObject();
             }
         }
