@@ -17,7 +17,7 @@ public:
     Drawing *find(std::string id);
 
     // add
-    void add(DomainObject *Drawing);
+    void add(DomainObject *drawing);
 
     // update
     void update(std::string id);

@@ -18,7 +18,7 @@ public:
         visitor->visitTriangle(this);
     }
 
-    std::string toString() const {
+    std::string toString() const override{
         std::stringstream ss;
         ss << "triangle " << _a << " " << _b << " " << _c;
         return ss.str();

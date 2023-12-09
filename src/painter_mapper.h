@@ -11,7 +11,7 @@ class PainterMapper: public AbstractMapper {
 public:
     Painter* find(std::string id);
     
-    void add(DomainObject * Painter);
+    void add(DomainObject * painter);
 
     void update(std::string id);
 

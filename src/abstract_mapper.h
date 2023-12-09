@@ -48,14 +48,35 @@ protected:
         return nullptr;
     }
 
-    DomainObject * abstractFind(std::string id, CallbackType callback);
+    DomainObject * abstractFind(std::string id, CallbackType callback){
+        DomainObject * domainObject = getDomainObject(id);
+        if(domainObject!=nullptr){
+            return domainObject;
+        }
 
-    void abstractAdd(DomainObject *domainObject);
+        sqlite3_exec(_db, findByIdStmt(id).c_str(), callback, NULL, &_errorMessage);
+        DomainObject * object = getDomainObject(id);
+        if(object != nullptr){
+            UnitOfWork::instance()->registerClean(object);
+        }
+        return object;
+    }
 
-    void abstractUpdate(DomainObject *domainObject);
+    void abstractAdd(DomainObject *domainObject){
+        sqlite3_exec(_db, addStmt(domainObject).c_str(), NULL, NULL, &_errorMessage);
+    }
 
-    void abstractDelete(std::string id);
+    void abstractUpdate(DomainObject *domainObject){
+        sqlite3_exec(_db, updateStmt(domainObject).c_str(), NULL, NULL, &_errorMessage);
+    }
 
-    void load(DomainObject *domainObject);
+    void abstractDelete(std::string id){
+        sqlite3_exec(_db, deleteByIdStmt(id).c_str(), NULL, NULL, &_errorMessage);
+    }
+
+    void load(DomainObject *domainObject){
+        _domainObjects[domainObject->id()] = domainObject;
+    }
 private:
+    char* _errorMessage;
 };
