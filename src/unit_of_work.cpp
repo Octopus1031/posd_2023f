@@ -23,6 +23,7 @@ void UnitOfWork::registerNew(DomainObject * domainObject){
 
 void UnitOfWork::registerClean(DomainObject * domainObject){
     _clean[domainObject->id()] = domainObject;
+    // std::cout << "reg clean" << std::endl;
 }
 
 void UnitOfWork::registerDirty(DomainObject * domainObject){
@@ -39,7 +40,7 @@ bool UnitOfWork::inNew(std::string id) const{
 }
 
 bool UnitOfWork::inClean(std::string id) const{
-
+    return _clean.count(id);
 }
 
 bool UnitOfWork::inDirty(std::string id) const{

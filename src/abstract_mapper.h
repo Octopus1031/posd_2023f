@@ -50,13 +50,13 @@ protected:
 
     DomainObject * abstractFind(std::string id, CallbackType callback){
         DomainObject * domainObject = getDomainObject(id);
-        if(domainObject!=nullptr){
+        if(domainObject != nullptr) {
             return domainObject;
         }
 
         sqlite3_exec(_db, findByIdStmt(id).c_str(), callback, NULL, &_errorMessage);
         DomainObject * object = getDomainObject(id);
-        if(object != nullptr){
+        if(object != nullptr) {
             UnitOfWork::instance()->registerClean(object);
         }
         return object;

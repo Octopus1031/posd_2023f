@@ -19,13 +19,15 @@ PainterMapper* PainterMapper::instance(){
 }
 
 int PainterMapper::callback(void *notUsed, int argc, char **argv, char **colNames){
-    Painter * painter = PainterMapper::instance()->find(argv[1]);
+    Painter* painter = new Painter(argv[0], argv[1]);
     PainterMapper::instance()->load(painter);
     return 0;
 }
 
+// TODO
 Painter* PainterMapper::find(std::string id){
-    return static_cast<Painter *>(abstractFind(id, PainterMapper::callback));
+    return static_cast<Painter*>(abstractFind(id, PainterMapper::callback));
+    // return nullptr;
 }
 
 void PainterMapper::add(DomainObject * painter){
@@ -33,7 +35,7 @@ void PainterMapper::add(DomainObject * painter){
 }
 
 void PainterMapper::update(std::string id){
-    abstractUpdate(this->find(id));
+    abstractUpdate(_domainObjects.at(id));
 }
 
 void PainterMapper::del(std::string id){

@@ -35,7 +35,7 @@ std::list<Shape *> DrawingMapper::convertShapes(int argc, char **argv)
     return _parser->getShapes();
 }
 
-int DrawingMapper::callback(void *notUsed, int argc, char **argv, char **colNames){
+int DrawingMapper::callback(void* notUsed, int argc, char** argv, char** colNames) {
     Painter * painter = PainterMapper::instance()->find(argv[1]);
     Drawing* drawing = new Drawing(argv[0], painter);
     DrawingMapper::instance()->load(drawing);
@@ -43,7 +43,7 @@ int DrawingMapper::callback(void *notUsed, int argc, char **argv, char **colName
 }
 
 Drawing *DrawingMapper::find(std::string id){
-    return static_cast<Drawing *>(abstractFind(id, DrawingMapper::callback));
+    return static_cast<Drawing*>(abstractFind(id, DrawingMapper::callback));
 }
 
 void DrawingMapper::add(DomainObject *drawing){
@@ -52,7 +52,7 @@ void DrawingMapper::add(DomainObject *drawing){
 
     // update
 void DrawingMapper::update(std::string id){
-    abstractUpdate(this->find(id));
+    abstractUpdate(_domainObjects.at(id));
 }
 
 // delete
@@ -60,9 +60,8 @@ void DrawingMapper::del(std::string id){
     abstractDelete(id);
 }
 
-std::string DrawingMapper::findByIdStmt(std::string id) const
-{
-    std::string stmt = "SELECT * FROM drawing WHERE ID = '" + id + "'";
+std::string DrawingMapper::findByIdStmt(std::string id) const{
+    std::string stmt = "SELECT * FROM drawing WHERE ID='" + id + "'";
     return stmt;
 }
 
@@ -74,7 +73,7 @@ std::string DrawingMapper::updateStmt(DomainObject* domainObject) const{
 
 std::string DrawingMapper::addStmt(DomainObject *domainObject) const{
     Drawing* drawing = static_cast<Drawing*>(domainObject);
-    std::string stmt = "INSERT INTO drawing VALUES (" + drawing->id() + ", " + drawing->painter()->id() + ", " + drawing->getShapesAsString() + ")";
+    std::string stmt = "INSERT INTO drawing VALUES ('" + drawing->id() + "', '" + drawing->painter()->id() + "', '" + drawing->getShapesAsString() + "')";
     return stmt;
 }
 
