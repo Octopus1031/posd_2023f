@@ -181,3 +181,33 @@ TEST_F(DBSuite, newDrawingAndPainter){
     ASSERT_EQ("d_9999", d->id());
     ASSERT_EQ("Nana", d->painter()->name());
 }
+
+TEST_F(DBSuite, deletePainter){
+    Painter* painter = pm->find("p_9999");
+    UnitOfWork::instance()->registerDeleted(painter);
+
+    EXPECT_TRUE(UnitOfWork::instance()->inDeleted(painter->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inClean(painter->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inDirty(painter->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inNew(painter->id()));
+
+    UnitOfWork::instance()->commit();
+    EXPECT_FALSE(UnitOfWork::instance()->inDeleted(painter->id()));
+
+    ASSERT_EQ(nullptr, pm->find("p_9999"));
+}
+
+TEST_F(DBSuite, deleteDrawing){
+    Drawing* drawing = dm->find("d_9999");
+    UnitOfWork::instance()->registerDeleted(drawing);
+
+    EXPECT_TRUE(UnitOfWork::instance()->inDeleted(drawing->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inClean(drawing->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inDirty(drawing->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inNew(drawing->id()));
+
+    UnitOfWork::instance()->commit();
+    EXPECT_FALSE(UnitOfWork::instance()->inDeleted(drawing->id()));
+
+    ASSERT_EQ(nullptr, dm->find("p_9999"));
+}

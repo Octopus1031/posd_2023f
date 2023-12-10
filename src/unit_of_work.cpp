@@ -32,6 +32,9 @@ void UnitOfWork::registerDirty(DomainObject * domainObject){
 
 void UnitOfWork::registerDeleted(DomainObject * domainObject){
     _deleted[domainObject->id()] = domainObject;
+    _clean.erase(domainObject->id());
+    _new.erase(domainObject->id());
+    _dirty.erase(domainObject->id());
 }
 
 bool UnitOfWork::inNew(std::string id) const{
@@ -77,8 +80,24 @@ void UnitOfWork::commit(){
             PainterMapper::instance()->add(newObj.second);
         }
         else{
+            throw std::string("commit new err");
         }
         registerClean(newObj.second);
     }
     _new.clear();
+
+    for(auto deletedObj : _deleted) {
+        Drawing* d = dynamic_cast<Drawing*>(deletedObj.second);
+        Painter* p = dynamic_cast<Painter*>(deletedObj.second);
+        if(d!=nullptr){
+            DrawingMapper::instance()->del(deletedObj.first);
+        }
+        else if(p!=nullptr){
+            PainterMapper::instance()->del(deletedObj.first);
+        }
+        else{
+            throw std::string("commit delete err");
+        }
+    }
+    _deleted.clear();
 }
