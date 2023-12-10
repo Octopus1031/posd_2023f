@@ -5,9 +5,7 @@
 
 class Painter : public DomainObject {
 public:
-    Painter(std::string id, std::string name) : DomainObject(id), _name(name) {
-        UnitOfWork::instance()->registerNew(this);
-    }
+    Painter(std::string id, std::string name) : DomainObject(id), _name(name) { }
 
     std::string name() const {
         return _name;

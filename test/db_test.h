@@ -165,7 +165,9 @@ TEST_F(DBSuite, notFound){
 
 TEST_F(DBSuite, newDrawingAndPainter){
     Painter* painter = new Painter("p_9999", "Nana");
+    UnitOfWork::instance()->registerNew(painter);
     Drawing* drawing = new Drawing("d_9999", painter);
+    UnitOfWork::instance()->registerNew(drawing);
 
     EXPECT_TRUE(UnitOfWork::instance()->inNew(painter->id()));
     EXPECT_TRUE(UnitOfWork::instance()->inNew(drawing->id()));
