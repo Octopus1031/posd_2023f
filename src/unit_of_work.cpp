@@ -19,7 +19,6 @@ UnitOfWork * UnitOfWork::instance(){
 
 void UnitOfWork::registerNew(DomainObject * domainObject){
     _new[domainObject->id()] = domainObject;
-    DrawingMapper::instance()->load(this);
 }
 
 void UnitOfWork::registerClean(DomainObject * domainObject){
@@ -52,5 +51,39 @@ bool UnitOfWork::inDeleted(std::string id) const{
 }
 
 void UnitOfWork::commit(){
+    for(auto dirty : _dirty) {
+        Drawing* d = dynamic_cast<Drawing*>(dirty.second);
+        Painter* p = dynamic_cast<Painter*>(dirty.second);
+        if(d!=nullptr){
+            // std::cout << "d id: " + d->id() <<std::endl;
+            DrawingMapper::instance()->update(dirty.first);
+        }
+        else if(p!=nullptr){
+            // std::cout << "p id: " + p->id() <<std::endl;
+            PainterMapper::instance()->update(dirty.first);
+        }
+        else{
+            throw std::string("commit dirty err");
+        }
+        registerClean(dirty.second);
+    }
+    _dirty.clear();
 
+    for(auto newObj : _new) {
+        Drawing* d = dynamic_cast<Drawing*>(newObj.second);
+        Painter* p = dynamic_cast<Painter*>(newObj.second);
+        if(d!=nullptr){
+            // std::cout << "d id: " + d->id() <<std::endl;
+            DrawingMapper::instance()->add(newObj.second);
+        }
+        else if(p!=nullptr){
+            // std::cout << "p id: " + p->id() <<std::endl;
+            PainterMapper::instance()->add(newObj.second);
+        }
+        else{
+            throw std::string("commit new err");
+        }
+        registerClean(newObj.second);
+    }
+    _new.clear();
 }
