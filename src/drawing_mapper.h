@@ -43,7 +43,7 @@ protected:
     std::list<Shape *> convertShapes(int argc, char **argv);
 
 private:
-    char *_errorMessage;
+    // char *_errorMessage;
     static DrawingMapper *_instance;
     Builder *_builder;
     Scanner *_scanner;

@@ -33,6 +33,6 @@ protected:
     static int callback(void* notUsed, int argc, char** argv, char** colNames);
     
 private:
-    char* _errorMessage;
+    // char* _errorMessage;
     static PainterMapper* _instance;
 };

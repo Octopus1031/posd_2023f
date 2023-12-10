@@ -30,8 +30,7 @@
 
     Shape *getShape(int i) const
     {
-        // std::cout << "size:" + std::to_string(_shapes.size()) << std::endl;
-        if (i < 0 || i > _shapes.size() - 1)
+        if (i < 0 || i > (int)_shapes.size() - 1)
             return nullptr;
 
         auto it = _shapes.begin();
