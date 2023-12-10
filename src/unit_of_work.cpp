@@ -71,6 +71,7 @@ void UnitOfWork::commit(){
 
     // std::cout << "n size: " + _new.size() <<std::endl;
     for(auto newObj : _new) {
+        std::cout << ((newObj.second==nullptr)?"1":"0") << std::endl;
         Drawing* d = dynamic_cast<Drawing*>(newObj.second);
         Painter* p = dynamic_cast<Painter*>(newObj.second);
         if(d!=nullptr){
@@ -79,7 +80,6 @@ void UnitOfWork::commit(){
         }
         else if(p!=nullptr){
             std::cout << "np id: " + p->id() <<std::endl;
-            std::cout << ((newObj.second==nullptr)?"1":"0") << std::endl;
             PainterMapper::instance()->add(newObj.second);
         }
         else{
