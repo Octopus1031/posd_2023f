@@ -88,4 +88,5 @@ void UnitOfWork::commit(){
         registerClean(newObj.second);
     }
     _new.clear();
+    std::cout << "end" << std::endl;
 }
