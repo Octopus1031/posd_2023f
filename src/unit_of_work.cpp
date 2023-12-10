@@ -55,11 +55,11 @@ void UnitOfWork::commit(){
         Drawing* d = dynamic_cast<Drawing*>(dirty.second);
         Painter* p = dynamic_cast<Painter*>(dirty.second);
         if(d!=nullptr){
-            // std::cout << "d id: " + d->id() <<std::endl;
+            std::cout << "d id: " + d->id() <<std::endl;
             DrawingMapper::instance()->update(dirty.first);
         }
         else if(p!=nullptr){
-            // std::cout << "p id: " + p->id() <<std::endl;
+            std::cout << "p id: " + p->id() <<std::endl;
             PainterMapper::instance()->update(dirty.first);
         }
         else{
@@ -73,11 +73,11 @@ void UnitOfWork::commit(){
         Drawing* d = dynamic_cast<Drawing*>(newObj.second);
         Painter* p = dynamic_cast<Painter*>(newObj.second);
         if(d!=nullptr){
-            // std::cout << "d id: " + d->id() <<std::endl;
+            std::cout << "d id: " + d->id() <<std::endl;
             DrawingMapper::instance()->add(newObj.second);
         }
         else if(p!=nullptr){
-            // std::cout << "p id: " + p->id() <<std::endl;
+            std::cout << "p id: " + p->id() <<std::endl;
             PainterMapper::instance()->add(newObj.second);
         }
         else{
