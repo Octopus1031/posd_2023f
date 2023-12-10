@@ -19,15 +19,14 @@ PainterMapper* PainterMapper::instance(){
 }
 
 int PainterMapper::callback(void *notUsed, int argc, char **argv, char **colNames){
+    // std::cout << "pcb " + std::string(argv[0]) + ", " + argv[1] << std::endl;
     Painter* painter = new Painter(argv[0], argv[1]);
     PainterMapper::instance()->load(painter);
     return 0;
 }
 
-// TODO
 Painter* PainterMapper::find(std::string id){
     return static_cast<Painter*>(abstractFind(id, PainterMapper::callback));
-    // return nullptr;
 }
 
 void PainterMapper::add(DomainObject * painter){
@@ -56,7 +55,7 @@ std::string PainterMapper::updateStmt(DomainObject* domainObject) const{
 
 std::string PainterMapper::addStmt(DomainObject *domainObject) const{
     Painter* painter = static_cast<Painter*>(domainObject);
-    std::string stmt = "INSERT INTO painter VALUES (" + painter->id() + ", " + painter->name() + ")";
+    std::string stmt = "INSERT INTO painter (ID, name) values ('" + painter->id() + "', '" + painter->name() + "')";
     return stmt;
 }
 

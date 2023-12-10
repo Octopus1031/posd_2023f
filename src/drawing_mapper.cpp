@@ -36,7 +36,9 @@ std::list<Shape *> DrawingMapper::convertShapes(int argc, char **argv)
 }
 
 int DrawingMapper::callback(void* notUsed, int argc, char** argv, char** colNames) {
+    // std::cout << "dcb [0]" + std::string(argv[0]) + ", [1]" + argv[1] + ", [2]" + argv[2] << std::endl;
     Painter * painter = PainterMapper::instance()->find(argv[1]);
+    // std::cout << "dcb " + std::string(((painter==nullptr)?"1":"0")) << std::endl;
     Parser * parser = new Parser(new Scanner(), new Builder());
     parser->setInput(argv[2]);
     parser->parse();

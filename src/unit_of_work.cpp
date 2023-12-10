@@ -55,11 +55,9 @@ void UnitOfWork::commit(){
         Drawing* d = dynamic_cast<Drawing*>(dirty.second);
         Painter* p = dynamic_cast<Painter*>(dirty.second);
         if(d!=nullptr){
-            std::cout << "dd id: " + d->id() <<std::endl;
             DrawingMapper::instance()->update(dirty.first);
         }
         else if(p!=nullptr){
-            std::cout << "dp id: " + p->id() <<std::endl;
             PainterMapper::instance()->update(dirty.first);
         }
         else{
@@ -69,24 +67,18 @@ void UnitOfWork::commit(){
     }
     _dirty.clear();
 
-    // std::cout << "n size: " + _new.size() <<std::endl;
     for(auto newObj : _new) {
-        std::cout << ((newObj.second==nullptr)?"1":"0") << std::endl;
         Drawing* d = dynamic_cast<Drawing*>(newObj.second);
         Painter* p = dynamic_cast<Painter*>(newObj.second);
         if(d!=nullptr){
-            std::cout << "nd id: " + d->id() <<std::endl;
             DrawingMapper::instance()->add(newObj.second);
         }
         else if(p!=nullptr){
-            std::cout << "np id: " + p->id() <<std::endl;
             PainterMapper::instance()->add(newObj.second);
         }
         else{
-            throw std::string("commit new err");
         }
         registerClean(newObj.second);
     }
     _new.clear();
-    std::cout << "end" << std::endl;
 }

@@ -118,7 +118,7 @@ protected:
     {
         if (rc)
         {
-            std::cout << "db error: " << err_msg << std::endl;
+            // std::cout << "db error: " << err_msg << std::endl;
             sqlite3_free(err_msg);
         }
         ASSERT_EQ(SQLITE_OK, rc);
@@ -176,4 +176,8 @@ TEST_F(DBSuite, newDrawingAndPainter){
 
     EXPECT_FALSE(UnitOfWork::instance()->inNew(painter->id()));
     EXPECT_FALSE(UnitOfWork::instance()->inNew(drawing->id()));
+
+    Drawing* d = dm->find("d_9999");
+    ASSERT_EQ("d_9999", d->id());
+    ASSERT_EQ("Nana", d->painter()->name());
 }
