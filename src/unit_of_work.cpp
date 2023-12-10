@@ -19,11 +19,11 @@ UnitOfWork * UnitOfWork::instance(){
 
 void UnitOfWork::registerNew(DomainObject * domainObject){
     _new[domainObject->id()] = domainObject;
+    DrawingMapper::instance()->load(this);
 }
 
 void UnitOfWork::registerClean(DomainObject * domainObject){
     _clean[domainObject->id()] = domainObject;
-    // std::cout << "reg clean" << std::endl;
 }
 
 void UnitOfWork::registerDirty(DomainObject * domainObject){
@@ -32,7 +32,7 @@ void UnitOfWork::registerDirty(DomainObject * domainObject){
 }
 
 void UnitOfWork::registerDeleted(DomainObject * domainObject){
-
+    _deleted[domainObject->id()] = domainObject;
 }
 
 bool UnitOfWork::inNew(std::string id) const{

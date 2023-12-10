@@ -135,8 +135,7 @@ TEST_F(DBSuite, Sanity)
 {
 }
 
-TEST_F(DBSuite, findDrawing)
-{
+TEST_F(DBSuite, findDrawing){
     Drawing *drawing = dm->find("d_0001");
     
     EXPECT_TRUE(UnitOfWork::instance()->inClean("d_0001"));
@@ -148,3 +147,25 @@ TEST_F(DBSuite, findDrawing)
     ASSERT_EQ(drawing->painter()->id(), "p_0001");
     ASSERT_EQ(drawing->painter()->name(), "Patrick");
 }
+
+TEST_F(DBSuite, findPainter){
+    Painter* painter = pm->find("p_0001");
+
+    ASSERT_EQ("p_0001", painter->id());
+    ASSERT_EQ("Patrick", painter->name());
+
+    EXPECT_TRUE(UnitOfWork::instance()->inClean("p_0001"));
+    EXPECT_FALSE(UnitOfWork::instance()->inDirty("p_0001"));
+}
+
+TEST_F(DBSuite, newDrawingAndPainter){
+    Painter* painter = new Painter("p_9999", "Nana");
+    Drawing* drawing = new Drawing("d_9999", painter);
+
+    EXPECT_TRUE(UnitOfWork::instance()->inNew(painter->id()));
+    EXPECT_TRUE(UnitOfWork::instance()->inNew(drawing->id()));
+
+    ASSERT_EQ(painter, pm->find("p_9999"));
+    ASSERT_EQ(drawing, dm->find("d_9999"));
+}
+
