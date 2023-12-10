@@ -36,7 +36,7 @@ void UnitOfWork::registerDeleted(DomainObject * domainObject){
 }
 
 bool UnitOfWork::inNew(std::string id) const{
-
+    return _new.count(id);
 }
 
 bool UnitOfWork::inClean(std::string id) const{
@@ -44,11 +44,11 @@ bool UnitOfWork::inClean(std::string id) const{
 }
 
 bool UnitOfWork::inDirty(std::string id) const{
-
+    return _dirty.count(id);
 }
 
 bool UnitOfWork::inDeleted(std::string id) const{
-
+    return _deleted.count(id);
 }
 
 void UnitOfWork::commit(){
