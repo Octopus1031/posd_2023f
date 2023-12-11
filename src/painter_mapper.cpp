@@ -19,7 +19,6 @@ PainterMapper* PainterMapper::instance(){
 }
 
 int PainterMapper::callback(void *notUsed, int argc, char **argv, char **colNames){
-    // std::cout << "pcb " + std::string(argv[0]) + ", " + argv[1] << std::endl;
     Painter* painter = new Painter(argv[0], argv[1]);
     PainterMapper::instance()->load(painter);
     return 0;

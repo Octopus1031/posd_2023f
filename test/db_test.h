@@ -118,7 +118,6 @@ protected:
     {
         if (rc)
         {
-            // std::cout << "db error: " << err_msg << std::endl;
             sqlite3_free(err_msg);
         }
         ASSERT_EQ(SQLITE_OK, rc);
@@ -233,7 +232,7 @@ TEST_F(DBSuite, updateDrawing){
     EXPECT_EQ("Junna", d->painter()->name());
 
     UnitOfWork::instance()->commit();
-    
-    EXPECT_TRUE(UnitOfWork::instance()->inClean(d->id()));
 
+    EXPECT_TRUE(UnitOfWork::instance()->inClean(d->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inDirty(d->id()));
 }
