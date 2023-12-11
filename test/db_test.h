@@ -211,3 +211,29 @@ TEST_F(DBSuite, deleteDrawing){
 
     ASSERT_EQ(nullptr, dm->find("p_9999"));
 }
+
+TEST_F(DBSuite, updateDrawing){
+    Painter* painterK = new Painter("p_6666", "Kirin");
+    UnitOfWork::instance()->registerNew(painterK);
+    Drawing* drawing = new Drawing("d_6666", painterK);
+    UnitOfWork::instance()->registerNew(drawing);
+    Painter* painterJ = new Painter("p_9925", "Junna");
+    UnitOfWork::instance()->registerNew(painterJ);
+    UnitOfWork::instance()->commit();
+
+    Drawing* d = dm->find("d_6666");
+    
+    EXPECT_TRUE(UnitOfWork::instance()->inClean(d->id()));
+    EXPECT_FALSE(UnitOfWork::instance()->inDirty(d->id()));
+    EXPECT_EQ("Kirin", d->painter()->name());
+
+    d->setPainter(painterJ);
+    EXPECT_FALSE(UnitOfWork::instance()->inClean(d->id()));
+    EXPECT_TRUE(UnitOfWork::instance()->inDirty(d->id()));
+    EXPECT_EQ("Junna", d->painter()->name());
+
+    UnitOfWork::instance()->commit();
+    
+    EXPECT_TRUE(UnitOfWork::instance()->inClean(d->id()));
+
+}
