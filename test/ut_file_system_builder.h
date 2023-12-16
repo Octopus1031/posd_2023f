@@ -13,7 +13,7 @@ TEST(FileSystemBuilder, Normal) {
 
     Node * home = parser->getRoot();
 
-    Iterator * it = home->createIterator(OrderBy::Name);
+    Iterator * it = home->createIterator(new OrderByNameIteratorFactory);
     it->first();
     ASSERT_FALSE(it->isDone());
     

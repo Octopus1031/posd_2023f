@@ -1,7 +1,7 @@
 #pragma once
 
 #include "iterator_factory.h"
-#incldue "folder.h"
+#include "folder.h"
 
 class FolderIteratorFactory: public IteratorFactory {
 public:
@@ -9,11 +9,8 @@ public:
 
     }
 
-    FolderIterator* create(Folder * node, int operationCount) override{
-        if(node->_operationCount != operationCount){
-            throw "FolderIteratorFactory create fail";
-        }
-        return new FolderIterator(node);
+    Folder::FolderIterator* create(Folder * node, int operationCount) override{
+        return new Folder::FolderIterator(node, operationCount);
     }
 };
 
@@ -23,11 +20,8 @@ public:
 
     }
 
-    OrderByNameIterator* create(Folder * node, int operationCount) override{
-        if(node->_operationCount != operationCount){
-            throw "OrderByNameIteratorFactory create fail";
-        }
-        return new OrderByNameIterator(node);
+    Folder::OrderByNameIterator* create(Folder * node, int operationCount) override{
+        return new Folder::OrderByNameIterator(node, operationCount);
     }
 };
 
@@ -37,11 +31,8 @@ public:
 
     }
 
-    OrderByNameWithFolderFirstIterator* create(Folder* node, int operationCount) override{
-        if(node->_operationCount != operationCount){
-            throw "OrderByNameWithFolderFirstIteratorFactory create fail";
-        }
-        return new OrderByNameWithFolderFirstIterator(node);
+    Folder::OrderByNameWithFolderFirstIterator* create(Folder* node, int operationCount) override{
+        return new Folder::OrderByNameWithFolderFirstIterator(node, operationCount);
     }
 };
 
@@ -51,10 +42,7 @@ public:
 
     }
 
-    OrderByKindIterator* create(Folder* node, int operationCount) override{
-        if(node->_operationCount != operationCount){
-            throw "OrderByKindIteratorFactory create fail";
-        }
-        return new OrderByKindIterator(node);
+    Folder::OrderByKindIterator* create(Folder* node, int operationCount) override{
+        return new Folder::OrderByKindIterator(node, operationCount);
     }
 };
