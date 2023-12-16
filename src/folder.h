@@ -127,6 +127,13 @@ public:
         visitor->visitFolder(this);
     }
 
+    void renameChild(std::string path) override{
+        for(auto n : _nodes){
+            n->setPath(path + "/" + n->name());
+            n->renameChild(n->path());
+        }
+    }
+
 private:
     class AbstractFolderIterator: public Iterator {
     private:

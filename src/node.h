@@ -67,4 +67,16 @@ public:
     }
 
     virtual void accept(Visitor * visitor) = 0;
+
+    void rename(std::string name){
+        size_t slash = _path.rfind(this->name());
+        _path = _path.substr(0, slash) + name;
+        renameChild(_path);
+    }
+
+    virtual void renameChild(std::string path){ }
+
+    void setPath(std::string path){
+        _path = path;
+    }
 };
