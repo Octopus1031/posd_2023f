@@ -1,6 +1,7 @@
 #pragma once
 
 #include "node.h"
+#include "file.h"
 #include "folder.h"
 
 // A Proxy to other Nodes
@@ -12,8 +13,7 @@ public:
     Link(std::string path, Node * node) : Node(path), _node(node) { }
 
     int numberOfFiles() const {
-        // TODO:
-        return 0;
+        return _node->numberOfFiles();
     }
 
     Node * find(std::string path) {
@@ -28,7 +28,7 @@ public:
     }
 
     void add(Node * node){
-        // TODO:
+        _node->add(node);
     }
 
     void remove(string path){
