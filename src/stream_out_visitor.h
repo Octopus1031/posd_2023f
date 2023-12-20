@@ -3,6 +3,7 @@
 #include "file.h"
 #include "folder.h"
 #include "visitor.h"
+#include "link.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -34,6 +35,10 @@ public:
 
     string getResult() const {
         return _result;
+    }
+
+    void visitLink(Link * link) override {
+        // TODO: 
     }
 
 private:

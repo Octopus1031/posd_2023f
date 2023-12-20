@@ -3,6 +3,7 @@
 #include "file.h"
 #include "folder.h"
 #include "visitor.h"
+#include "link.h"
 
 class FindByNameVisitor : public Visitor {
 public:
@@ -31,6 +32,10 @@ public:
 
     std::list<string> getPaths() const {
         return _paths;
+    }
+
+    void visitLink(Link * link) override {
+        // TODO: 
     }
 
 private:

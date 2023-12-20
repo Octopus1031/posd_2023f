@@ -367,6 +367,7 @@ public:
         Node * _root;
         Iterator * _iterator = nullptr;
 
+        // TODO:
         static string getKind(const Node * node) {
             const Folder * folder = dynamic_cast<const Folder *>(node);
             if (folder) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "visitor.h"
+#include "link.h"
 
 class TreeVisitor: public Visitor {
 public:
@@ -47,6 +48,10 @@ public:
 
     string getTree() {
         return _result;
+    }
+
+    void visitLink(Link * link){
+        // TODO: 
     }
 
 private:
