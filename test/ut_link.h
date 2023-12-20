@@ -1,3 +1,5 @@
+#include <list>
+
 #include "../src/link.h"
 #include "../src/node.h"
 
@@ -62,4 +64,19 @@ TEST_F(LinkTest, LinkFind){
     ASSERT_EQ(hello, linkHome->find(linkHello->path()));
     ASSERT_EQ(home, linkHome->find(linkHome->path()));
     ASSERT_EQ(nullptr, linkHome->find("structure/Nothing"));
+}
+
+TEST_F(LinkTest, LinkFindByName){
+    Node* linkHome = new Link(path, home);
+    Node* linkHello = new Link(path + "/hello.txt", hello);
+
+    linkHome->add(documents);
+    linkHome->add(downloads);
+    linkHome->add(hello);
+    linkHome->add(profile);
+
+    ASSERT_EQ(hello->path(), (linkHello->findByName(linkHello->name())).front());
+    ASSERT_EQ(hello->path(), (linkHome->findByName(linkHello->name()).front()));
+    ASSERT_EQ(home->path(), (linkHome->findByName(linkHome->name()).front()));
+    ASSERT_EQ("", (linkHome->findByName("Nothing")).front());
 }

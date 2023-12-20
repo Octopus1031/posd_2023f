@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+
 #include "node.h"
 #include "file.h"
 #include "folder.h"
@@ -21,9 +23,7 @@ public:
     }
 
     std::list<std::string> findByName(std::string name) {
-        // TODO:
-        std::list<std::string> l;
-        return  l;
+        return  _node->findByName(name);
     }
 
     void add(Node * node){
@@ -49,10 +49,3 @@ public:
     }
 
 };
-
-// int numberOfFiles()
-// Node * find(string path)
-// std::list<string> findByName(string name)
-// void add(Node * node)
-// void remove(string path)
-// Node * getChildByName(const char * name)
