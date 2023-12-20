@@ -6,24 +6,10 @@
 // A Proxy to other Nodes
 class Link : public Node{
 private:
-    Node* node;
+    Node* _node;
 
 public:
-    // Link(std::string path) : Node(path) {
-    //     struct stat fileInfo;
-    //     const char *c = path.c_str();
-    //     if(lstat(c, &fileInfo) == 0){
-    //         if(S_ISDIR(fileInfo.st_mode))
-    //             node = new Folder(path);
-    //         else
-    //             node = new File(path);
-    //     }
-    //     throw "No Folder exists";
-    // }
-
-    Link(Node * node) : Node(node->path()){
-        this->node = node;
-    }
+    Link(std::string path, Node * node) : Node(path), _node(node) { }
 
     int numberOfFiles() const {
         // TODO:
@@ -56,7 +42,7 @@ public:
 
     // returns a pointer to the target node.
     Node * getTarget() {
-        return node;
+        return _node;
     }
 
     void accept(Visitor * visitor) {
