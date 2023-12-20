@@ -1,31 +1,65 @@
 #include "../src/link.h"
 #include "../src/node.h"
 
-TEST(Link, linkSetting){
+class LinkTest: public ::testing::Test{
+protected:
+    virtual void SetUp(){
+        path = "structure/home";
+        home = new Folder(path);
+        documents = new Folder(path + "/Documents");
+        downloads = new Folder(path + "/Downloads");
+        hello = new File(path + "/hello.txt");
+        profile = new File(path + "/my_profile");
+    }
+
+    void TearDown(){
+        delete home;
+        home = nullptr;
+        documents = nullptr;
+        downloads = nullptr;
+        hello = nullptr;
+        profile = nullptr;
+    }
+
     std::string path = "structure/home";
+    Node* home;
+    Node* documents;
+    Node* downloads;
+    Node* hello;
+    Node* profile;
+};
+
+TEST_F(LinkTest, LinkSetting){
     Node* link = new Link(path, new Folder(path));
 
     ASSERT_EQ("home", link->name());
     ASSERT_EQ(path , link->path());    
 }
 
-TEST(Link, linkAddAndNumberOfFiles){
-    std::string path = "structure/home";
-    Node* home = new Folder(path);
+TEST_F(LinkTest, LinkAddAndNumberOfFiles){
     Node* linkHome = new Link(path, home);
-
-    Node* document = new Folder(path + "/Documents");
-    Node* download = new Folder(path + "/Downloads");
-    Node* hello = new File(path + "/hello.txt");
     Node* linkHello = new Link(path + "/hello.txt", hello);
 
-    Node* profile = new File(path + "/my_profile");
-
-    linkHome->add(document);
-    linkHome->add(download);
+    linkHome->add(documents);
+    linkHome->add(downloads);
     linkHome->add(hello);
     linkHome->add(profile);
 
     ASSERT_EQ(1, linkHello->numberOfFiles());
     ASSERT_EQ(2, linkHome->numberOfFiles()); 
+}
+
+TEST_F(LinkTest, LinkFind){
+    Node* linkHome = new Link(path, home);
+    Node* linkHello = new Link(path + "/hello.txt", hello);
+
+    linkHome->add(documents);
+    linkHome->add(downloads);
+    linkHome->add(hello);
+    linkHome->add(profile);
+
+    ASSERT_EQ(hello, linkHello->find(linkHello->path()));
+    ASSERT_EQ(hello, linkHome->find(linkHello->path()));
+    ASSERT_EQ(home, linkHome->find(linkHome->path()));
+    ASSERT_EQ(nullptr, linkHome->find("structure/Nothing"));
 }

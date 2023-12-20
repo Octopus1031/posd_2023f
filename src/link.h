@@ -17,8 +17,7 @@ public:
     }
 
     Node * find(std::string path) {
-        // TODO:
-        return nullptr;
+        return _node->find(path);
     }
 
     std::list<std::string> findByName(std::string name) {
