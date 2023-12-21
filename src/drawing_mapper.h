@@ -5,42 +5,43 @@
 #include <sqlite3.h>
 
 #include "drawing.h"
-#include "sqlite_abstract_mapper.h"
 #include "painter_mapper.h"
 #include "scanner.h"
 #include "builder.h"
 #include "parser.h"
 
-class DrawingMapper: public SQLiteAbstractMapper {
+class SQLiteDrawingMapper;
+
+class DrawingMapper{
 public:
 
     ~DrawingMapper() {
         delete _parser;
     }
 
-    void add(DomainObject * Drawing);
+    virtual void add(DomainObject * Drawing) = 0;
 
-    Drawing* find(std::string id);
+    virtual Drawing* find(std::string id) = 0;
 
-    void update(std::string id);
+    virtual void update(std::string id) = 0;
 
-    void del(std::string id);
+    virtual void del(std::string id) = 0;
 
     static DrawingMapper* instance();
 
-    void cleanCache();
+    virtual void cleanCache() = 0;
 
-protected:
-    DrawingMapper();
+// protected:
+    // DrawingMapper();
 
     static int callback(void* notUsed, int argc, char** argv, char** colNames);
 
-    std::list<Shape *> convertShapes(char * shape_string);
+    virtual std::list<Shape *> convertShapes(char * shape_string) = 0;
 
-    std::string addStmt(DomainObject * domainObject) const;
-    std::string findByIdStmt(std::string id) const;
-    std::string updateStmt(DomainObject * domainObject) const;
-    std::string deleteByIdStmt(std::string id) const;
+    virtual std::string addStmt(DomainObject * domainObject) const = 0;
+    virtual std::string findByIdStmt(std::string id) const = 0;
+    virtual std::string updateStmt(DomainObject * domainObject) const = 0;
+    virtual std::string deleteByIdStmt(std::string id) const = 0;
 
 private:
     static DrawingMapper* _instance;
