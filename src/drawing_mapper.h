@@ -10,8 +10,6 @@
 #include "builder.h"
 #include "parser.h"
 
-class SQLiteDrawingMapper;
-
 class DrawingMapper{
 public:
 
