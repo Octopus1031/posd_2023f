@@ -31,8 +31,7 @@ public:
 
     virtual void cleanCache() = 0;
 
-// protected:
-    // DrawingMapper();
+protected:
 
     static int callback(void* notUsed, int argc, char** argv, char** colNames);
 
