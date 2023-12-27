@@ -22,7 +22,7 @@ public:
     }
 
     std::list<std::string> findByName(std::string name) {
-        return  _node->findByName(name);
+        return _node->findByName(name);
     }
 
     void add(Node * node){

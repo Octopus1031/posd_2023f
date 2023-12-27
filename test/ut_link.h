@@ -66,18 +66,18 @@ TEST_F(LinkTest, LinkFind){
     ASSERT_EQ(nullptr, linkHome->find("structure/Nothing"));
 }
 
-TEST_F(LinkTest, LinkFindByName){
-    Node* linkHome = new Link(path, home);
-    Node* linkHello = new Link(path + "/hello.txt", hello);
+TEST_F(LinkTest, LinkFuncs){
+    Link* linkHome = new Link("structure/home/linkHome", home);
+    //structure/home/Documents/favorite/ -->is Link->path()
+    //linkHome -->is Link->name()
+    Link* linkHello = new Link("structure/home/linkHello", hello);
 
     linkHome->add(documents);
     linkHome->add(downloads);
     linkHome->add(profile);
-    linkHome->add(linkHello);
 
-    ASSERT_EQ(hello->path(), (linkHello->findByName(linkHello->name())).front());
-    ASSERT_EQ(hello->path(), (linkHome->findByName(linkHello->name()).front()));
-    ASSERT_EQ(home->path(), (linkHome->findByName(linkHome->name()).front()));
-    ASSERT_EQ(0, (linkHome->findByName("Nothing")).size());
-    ASSERT_EQ(hello->path(), (linkHome->findByName(linkHello->name()).front()));
+    ASSERT_EQ(hello->path(), linkHello->getTarget()->path());
+    ASSERT_EQ(home->path(), linkHome->getTarget()->path());
+    ASSERT_EQ(0, linkHome->findByName("linkHome").size());
+    ASSERT_EQ(0, linkHome->findByName("linkHello").size());
 }
