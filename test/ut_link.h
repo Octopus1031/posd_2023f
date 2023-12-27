@@ -72,11 +72,12 @@ TEST_F(LinkTest, LinkFindByName){
 
     linkHome->add(documents);
     linkHome->add(downloads);
-    linkHome->add(hello);
     linkHome->add(profile);
+    linkHome->add(linkHello);
 
     ASSERT_EQ(hello->path(), (linkHello->findByName(linkHello->name())).front());
     ASSERT_EQ(hello->path(), (linkHome->findByName(linkHello->name()).front()));
     ASSERT_EQ(home->path(), (linkHome->findByName(linkHome->name()).front()));
     ASSERT_EQ(0, (linkHome->findByName("Nothing")).size());
+    ASSERT_EQ(hello->path(), (linkHome->findByName(linkHello->name()).front()));
 }

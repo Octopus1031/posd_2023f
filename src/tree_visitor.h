@@ -51,7 +51,7 @@ public:
     }
 
     void visitLink(Link * link){
-        // TODO: 
+        link->getTarget()->accept(this);
     }
 
 private:

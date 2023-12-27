@@ -35,7 +35,7 @@ public:
     }
 
     void visitLink(Link * link) override {
-        // TODO: 
+        link->getTarget()->accept(this);
     }
 
 private:

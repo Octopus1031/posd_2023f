@@ -37,13 +37,12 @@ public:
         return _node->getChildByName(name);
     }
 
-    // returns a pointer to the target node.
     Node * getTarget() {
         return _node;
     }
 
     void accept(Visitor * visitor) {
-        _node->accept(visitor);
+        visitor->visitLink(this);
     }
 
 };

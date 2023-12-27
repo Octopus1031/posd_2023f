@@ -106,6 +106,17 @@ TEST_F(VisitorTest, findNormal) {
     delete visitor;
 }
 
+TEST_F(VisitorTest, findNormalLink) {
+    FindByNameVisitor * visitor = new FindByNameVisitor("clean-architecture.pdf");
+
+    Node* linkHome = new Link("structure/home", home);
+    linkHome->accept(visitor);
+
+    ASSERT_EQ(1, visitor->getPaths().size());
+    ASSERT_EQ(ca->path(), visitor->getPaths().begin().operator*());
+    delete visitor;
+}
+
 TEST_F(VisitorTest, findMany) {
     FindByNameVisitor * visitor = new FindByNameVisitor("hello.txt");
 
@@ -128,6 +139,25 @@ TEST_F(VisitorTest, streamOutFile) {
     StreamOutVisitor * visitor = new StreamOutVisitor();
 
     profile->accept(visitor);
+
+    string expected;
+    expected += "_____________________________________________\n";
+    expected += "structure/home/my_profile\n";
+    expected += "---------------------------------------------\n";
+    expected += "Profile\n";
+    expected += "Name: name\n";
+    expected += "_____________________________________________\n";
+
+    ASSERT_EQ(expected, visitor->getResult());
+    delete visitor;
+}
+
+TEST_F(VisitorTest, streamOutFileLink) {
+    StreamOutVisitor * visitor = new StreamOutVisitor();
+
+    // profile->accept(visitor);
+    Node* linkProfile = new Link("structure/home/my_profile", profile);
+    linkProfile->accept(visitor);
 
     string expected;
     expected += "_____________________________________________\n";
