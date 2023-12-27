@@ -6,7 +6,6 @@
 #include "file.h"
 #include "folder.h"
 
-// A Proxy to other Nodes
 class Link : public Node{
 private:
     Node* _node;
@@ -31,12 +30,11 @@ public:
     }
 
     void remove(string path){
-        // TODO:
+        _node->remove(path);
     }
 
     Node * getChildByName(const char * name) const {
-        // TODO:
-        return nullptr;
+        return _node->getChildByName(name);
     }
 
     // returns a pointer to the target node.
@@ -45,7 +43,7 @@ public:
     }
 
     void accept(Visitor * visitor) {
-        // TODO:
+        _node->accept(visitor);
     }
 
 };
