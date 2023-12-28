@@ -68,8 +68,6 @@ TEST_F(LinkTest, LinkFind){
 
 TEST_F(LinkTest, LinkFuncs){
     Link* linkHome = new Link("structure/home/linkHome", home);
-    //structure/home/Documents/favorite/ -->is Link->path()
-    //linkHome -->is Link->name()
     Link* linkHello = new Link("structure/home/linkHello", hello);
 
     linkHome->add(documents);

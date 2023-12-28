@@ -1,5 +1,6 @@
 #include "../src/tree_visitor.h"
 #include "../src/iterator_factories.h"
+#include "../src/link.h"
 
 #include <iostream> 
 
@@ -43,6 +44,9 @@ protected:
         document->add(ca);
         ooad = new File("structure2/home/Documents/object-oriented-analysis-and-design.pdf");
         document->add(ooad);
+
+        linkHome = new Link("structure2/home/linkHome", home);
+        home->add(linkHome);
     }
 
     void TearDown() {
@@ -78,9 +82,11 @@ protected:
     Node * ddd;
     Node * ca;
     Node * ooad;
+    Node * linkHome;
 };
 
 TEST_F(TreeVisitorTest, OrderByName) {
+
     string expected = 
     ".\n"
     "├── Documents\n"
@@ -96,6 +102,7 @@ TEST_F(TreeVisitorTest, OrderByName) {
     "├── Downloads\n"
     "│   └── funny.png\n"
     "├── hello.txt\n"
+    "├── linkHome\n"
     "└── my_profile\n";
 
     TreeVisitor* tree = new TreeVisitor(OrderByNameIteratorFactory::instance());
@@ -124,6 +131,7 @@ TEST_F(TreeVisitorTest, OrderByNameWithFolderFirst) {
     "├── Downloads\n"
     "│   └── funny.png\n"
     "├── hello.txt\n"
+    "├── linkHome\n"
     "└── my_profile\n";
 
     TreeVisitor* tree = new TreeVisitor(OrderByNameWithFolderFirstIteratorFactory::instance());
@@ -151,6 +159,7 @@ TEST_F(TreeVisitorTest, OrderByKind) {
     "│   └── note.txt\n"
     "├── Downloads\n"
     "│   └── funny.png\n"
+    "├── linkHome\n"
     "└── hello.txt\n";
 
     TreeVisitor* tree = new TreeVisitor(OrderByKindIteratorFactory::instance());

@@ -51,7 +51,7 @@ public:
     }
 
     void visitLink(Link * link){
-        link->getTarget()->accept(this);
+        _result += link->name() + "\n";
     }
 
 private:

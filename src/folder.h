@@ -7,6 +7,7 @@
 #include "iterator.h"
 #include "dfs_iterator.h"
 #include "iterator_factory.h"
+#include "link.h"
 
 #include <iostream>
 
@@ -191,6 +192,11 @@ private:
                 return new File(node->path());
             }
 
+            Link * link = dynamic_cast<Link *>(node);
+            if(link){
+                return new Link(node->path(), link->getTarget());
+            }
+
             Node * clonedFolder = new Folder(node->path());
 
             std::list<Node *> children;
@@ -372,6 +378,11 @@ public:
             const Folder * folder = dynamic_cast<const Folder *>(node);
             if (folder) {
                 return "folder";
+            }
+
+            const Link * link = dynamic_cast<const Link *>(node);
+            if (link) {
+                return "link";
             }
 
             std::size_t pos = node->name().rfind(".");
